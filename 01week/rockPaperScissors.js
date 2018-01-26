@@ -16,8 +16,10 @@ const rockPaperScissors=(hand1, hand2)=> {
     return 'The result is a tie!'  //second if takes care of 3 cases where hand1 wins
   } else if ((hand1 === 'rock' && hand2 === 'scissors') || (hand1 === 'paper' && hand2 === 'rock') || (hand1 === 'scissors' && hand2 === 'paper')){
     return `hand1 wins with ${hand1} beating ${hand2}!`
-  } else {   //else takes care of last 3 cases where hand2 wins
+  } else if ((hand2 === 'rock' && hand1 === 'scissors') || (hand2 === 'paper' && hand1 === 'rock') || (hand2 === 'scissors' && hand1 === 'paper')){   //else takes care of last 3 cases where hand2 wins
     return `hand2 wins with ${hand2} beating ${hand1}!`
+  } else {
+    return 'not a valid entry'
   };
 
 
@@ -31,8 +33,12 @@ const rockPaperScissors=(hand1, hand2)=> {
   // case 'scissorspaper':
   //   return `hand1 wins with ${hand1} beating ${hand2}!`
   //   break;
-  // default:  //remaining 3 cases taken care when hand2 the winner
+  // case 'scissorsrock':  //3 more cases eliminated when hand1 the winner
+  // case 'rockpaper':
+  // case 'paperscissors':
   //   return `hand2 wins with ${hand2} beating ${hand1}!`
+  // default:  //remaining 3 cases taken care when hand2 the winner
+  //   return 'not a valid input'
   // };
 
 }
