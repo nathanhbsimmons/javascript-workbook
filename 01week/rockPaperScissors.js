@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 const rockPaperScissors=(hand1, hand2)=> {
 
   // SOLUTION #1:
-  // alternate solution using if/else statements to take care of all 9 possible cases
+  // solution using if/else statements to take care of all 9 possible cases
   if (hand1 === hand2){  // first if takes care of 3 cases of tie
     return 'The result is a tie!'  //second if takes care of 3 cases where hand1 wins
   } else if ((hand1 === 'rock' && hand2 === 'scissors') || (hand1 === 'paper' && hand2 === 'rock') || (hand1 === 'scissors' && hand2 === 'paper')){
@@ -24,7 +24,7 @@ const rockPaperScissors=(hand1, hand2)=> {
 
 
   // //SOLUTION #2:
-  // //solution using if and switch statements that takes care of all 9 possible cases
+  // // alternate solution using if and switch statements that takes care of all 9 possible cases
   // if(hand1 === hand2) return 'The result is a tie!'; //checks for tie result first, eliminates 3 cases
   //
   // switch(hand1+hand2){  //switch takes input of both strings and concatnates them into single string which can then be tested for truthiness
