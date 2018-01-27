@@ -7,19 +7,17 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-
 const rockPaperScissors=(hand1, hand2)=> {
-
   // SOLUTION #1:
   // solution using if/else statements to take care of all 9 possible cases
   if (hand1 === hand2){  // first if takes care of 3 cases of tie
-    return 'The result is a tie!'  //second if takes care of 3 cases where hand1 wins
-  } else if ((hand1 === 'rock' && hand2 === 'scissors') || (hand1 === 'paper' && hand2 === 'rock') || (hand1 === 'scissors' && hand2 === 'paper')){
-    return `hand1 wins with ${hand1} beating ${hand2}!`
-  } else if ((hand2 === 'rock' && hand1 === 'scissors') || (hand2 === 'paper' && hand1 === 'rock') || (hand2 === 'scissors' && hand1 === 'paper')){   //else takes care of last 3 cases where hand2 wins
-    return `hand2 wins with ${hand2} beating ${hand1}!`
-  } else {
-    return 'not a valid entry'
+    return "It's a tie!"
+  } else if ((hand1 === 'rock' && hand2 === 'scissors') || //second if takes care of 3 cases where hand1 wins
+            (hand1 === 'paper' && hand2 === 'rock') ||
+            (hand1 === 'scissors' && hand2 === 'paper')){
+    return "Hand one wins!"
+  } else {   //else takes care of last 3 cases where hand2 wins
+    return "Hand two wins!"
   };
 
 
@@ -31,22 +29,33 @@ const rockPaperScissors=(hand1, hand2)=> {
   // case 'rockscissors':  //3 more cases eliminated when hand1 the winner
   // case 'paperrock':
   // case 'scissorspaper':
-  //   return `hand1 wins with ${hand1} beating ${hand2}!`
+  //   return "Hand one wins!"
   //   break;
-  // case 'scissorsrock':  //3 more cases eliminated when hand1 the winner
-  // case 'rockpaper':
-  // case 'paperscissors':
-  //   return `hand2 wins with ${hand2} beating ${hand1}!`
   // default:  //remaining 3 cases taken care when hand2 the winner
-  //   return 'not a valid input'
+  //   return "Hand two wins!"
   // };
 
 }
 
+const isUserInputValid=(hand1, hand2)=> {
+  const possibleInputs = ['rock', 'paper', 'scissors']
+  const newHand1 = hand1.toLowerCase().trim()
+  const newHand2 = hand2.toLowerCase().trim()
+
+  if((possibleInputs.indexOf(newHand1) !== -1) ||
+    (possibleInputs.indexOf(newHand2) !== -1) ){
+    return rockPaperScissors(hand1, hand2);
+  } else {
+    return 'Invalid input! Please try again and type either rock, paper or scissors'
+  }
+}
+
+
+
 function getPrompt() {
   rl.question('hand1: ', (answer1) => {
     rl.question('hand2: ', (answer2) => {
-      console.log( rockPaperScissors(answer1, answer2) );
+      console.log( isUserInputValid(answer1, answer2));
       getPrompt();
     });
   });
