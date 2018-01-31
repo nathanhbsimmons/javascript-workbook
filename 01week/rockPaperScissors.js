@@ -79,7 +79,7 @@ if (typeof describe === 'function') {
     it('should scrub input to ensure lowercase with "trim"ed whitepace', () => {
       assert.equal(rockPaperScissors('rOcK', ' paper '), "Hand two wins!");
       assert.equal(rockPaperScissors('Paper', 'SCISSORS'), "Hand two wins!");
-      assert.equal(rockPaperScissors('ScissoRS ', 'pape r'), "Hand one wins!");
+      assert.equal(rockPaperScissors('ScissoRS ', ' paper '), "Hand one wins!");
     });
     it('should check to see if inputs are valid', () => {
       assert.equal(rockPaperScissors('leaf', 'river'), 'Invalid input! Please try again and type either rock, paper or scissors');
