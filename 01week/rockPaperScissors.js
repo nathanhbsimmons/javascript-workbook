@@ -5,15 +5,15 @@ const readline = require('readline');
 const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 
 const rockPaperScissors = (hand1, hand2) => {
-  
 
-  const checkForWin = (hand1, hand2) => {
+
+  const checkForWin = (newHand1, newHand2) => {
     // SOLUTION #1:
     // solution using if/else statements to take care of all 9 possible cases
-    if (hand1 === hand2) { // first if takes care of 3 cases of tie
+    if (newHand1 === newHand2) { // first if takes care of 3 cases of tie
       return "It's a tie!"
-    } else if ((hand1 === 'rock' && hand2 === 'scissors') || //second if takes care of 3 cases where hand1 wins
-    (hand1 === 'paper' && hand2 === 'rock') || (hand1 === 'scissors' && hand2 === 'paper')) {
+    } else if ((newHand1 === 'rock' && newHand2 === 'scissors') || //second if takes care of 3 cases where hand1 wins
+    (newHand1 === 'paper' && newHand2 === 'rock') || (newHand1 === 'scissors' && newHand2 === 'paper')) {
       return "Hand one wins!"
     } else { //else takes care of last 3 cases where hand2 wins
       return "Hand two wins!"
