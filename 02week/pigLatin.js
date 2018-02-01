@@ -2,10 +2,7 @@
 
 const assert = require('assert');
 const readline = require('readline');
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 
 // Pig Latin App Plan:
 //
@@ -32,7 +29,7 @@ function pigLatin(word) {
   const firstVowel = formattedWord.match(/[aeiou]/)
   const vowelIndex = formattedWord.indexOf(firstVowel)
 
-  const isInputValid=()=> {
+  const isInputValid = () => {
     if (formattedWord.match(/^[a-zA-Z]+$/) && formattedWord.length > 1) {
       return checkStartingLetter()
     } else {
@@ -40,7 +37,7 @@ function pigLatin(word) {
     }
   }
 
-  const checkStartingLetter=()=> {
+  const checkStartingLetter = () => {
     if (vowelIndex === 0) {
       return `${formattedWord}yay`
     } else {
@@ -48,17 +45,16 @@ function pigLatin(word) {
     }
   }
 
-  const rearrangeLetters=()=> {
+  const rearrangeLetters = () => {
     return `${formattedWord.substring(vowelIndex)}${formattedWord.substring(0, (vowelIndex))}ay`
   }
 
   return isInputValid()
 }
 
-
 function getPrompt() {
   rl.question('word ', (answer) => {
-    console.log( pigLatin(answer) );
+    console.log(pigLatin(answer));
     getPrompt();
   });
 }
