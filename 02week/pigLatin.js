@@ -42,7 +42,7 @@ function pigLatin(word) {
 
   const checkStartingLetter=()=> {
     if (vowelIndex === 0) {
-      return `${word}yay`
+      return `${formattedWord}yay`
     } else {
       return rearrangeLetters()
     }
