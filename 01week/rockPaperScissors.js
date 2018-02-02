@@ -5,7 +5,8 @@ const readline = require('readline');
 const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 
 const rockPaperScissors = (hand1, hand2) => {
-
+  const newHand1 = hand1.toLowerCase().trim()
+  const newHand2 = hand2.toLowerCase().trim()
 
   const checkForWin = (newHand1, newHand2) => {
     // SOLUTION #1:
@@ -34,10 +35,9 @@ const rockPaperScissors = (hand1, hand2) => {
     // };
   }
 
-  const isUserInputValid = (hand1, hand2) => {
+  const isUserInputValid = (newHand1, newHand2) => {
     const possibleInputs = ['rock', 'paper', 'scissors']
-    const newHand1 = hand1.toLowerCase().trim()
-    const newHand2 = hand2.toLowerCase().trim()
+
 
     if ((possibleInputs.indexOf(newHand1) !== -1) || (possibleInputs.indexOf(newHand2) !== -1)) {
       return checkForWin(newHand1, newHand2);
@@ -46,7 +46,7 @@ const rockPaperScissors = (hand1, hand2) => {
     }
   }
 
-  return isUserInputValid(hand1, hand2);
+  return isUserInputValid(newHand1, newHand2);
 }
 
 function getPrompt() {
