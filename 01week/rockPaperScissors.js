@@ -22,9 +22,9 @@ const rockPaperScissors = (hand1, hand2) => {
 
     // SOLUTION #2:
     //  alternate solution using if and switch statements that takes care of all 9 possible cases
-    // if(hand1 === hand2) return 'The result is a tie!'; checks for tie result first, eliminates 3 cases
+    // if(newHand1 === newHand2) return 'The result is a tie!'; checks for tie result first, eliminates 3 cases
     //
-    // switch(hand1+hand2){  switch takes input of both strings and concatnates them into single string which can then be tested for truthiness
+    // switch(newHand1+newHand2){  switch takes input of both strings and concatnates them into single string which can then be tested for truthiness
     // case 'rockscissors':  3 more cases eliminated when hand1 the winner
     // case 'paperrock':
     // case 'scissorspaper':
