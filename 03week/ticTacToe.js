@@ -57,6 +57,13 @@ function diagonalWin() {
   }
 };
 
+// function checkForTie() {
+//   board.forEach(function(ind) {
+//     if (ind !== ''){
+//       console.log("It's a tie")
+//     };
+//   });
+// }
 
 function checkForWin() {
   //8 winning cases are checked with these 3 seperate functions
