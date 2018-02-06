@@ -2,22 +2,57 @@
 
 const assert = require('assert');
 const readline = require('readline');
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+const rl = readline.createInterface({input: process.stdin, output: process.stdout});
+
+const rockPaperScissors = (hand1, hand2) => {
+  const newHand1 = hand1.toLowerCase().trim()
+  const newHand2 = hand2.toLowerCase().trim()
+
+  const checkForWin = (newHand1, newHand2) => {
+    // SOLUTION #1:
+    // solution using if/else statements to take care of all 9 possible cases
+    if (newHand1 === newHand2) { // first if takes care of 3 cases of tie
+      return "It's a tie!"
+    } else if ((newHand1 === 'rock' && newHand2 === 'scissors') || //second if takes care of 3 cases where hand1 wins
+    (newHand1 === 'paper' && newHand2 === 'rock') || (newHand1 === 'scissors' && newHand2 === 'paper')) {
+      return "Hand one wins!"
+    } else { //else takes care of last 3 cases where hand2 wins
+      return "Hand two wins!"
+    };
+
+    // SOLUTION #2:
+    //  alternate solution using if and switch statements that takes care of all 9 possible cases
+    // if(newHand1 === newHand2) return 'The result is a tie!'; checks for tie result first, eliminates 3 cases
+    //
+    // switch(newHand1+newHand2){  switch takes input of both strings and concatnates them into single string which can then be tested for truthiness
+    // case 'rockscissors':  3 more cases eliminated when hand1 the winner
+    // case 'paperrock':
+    // case 'scissorspaper':
+    //   return "Hand one wins!"
+    //   break;
+    // default:  remaining 3 cases taken care when hand2 the winner
+    //   return "Hand two wins!"
+    // };
+  }
+
+  const isUserInputValid = (newHand1, newHand2) => {
+    const possibleInputs = ['rock', 'paper', 'scissors']
 
 
-function rockPaperScissors(hand1, hand2) {
+    if ((possibleInputs.indexOf(newHand1) !== -1) || (possibleInputs.indexOf(newHand2) !== -1)) {
+      return checkForWin(newHand1, newHand2);
+    } else {
+      return 'Invalid input! Please try again and type either rock, paper or scissors'
+    }
+  }
 
-  // Write code here
-
+  return isUserInputValid(newHand1, newHand2);
 }
 
 function getPrompt() {
   rl.question('hand1: ', (answer1) => {
     rl.question('hand2: ', (answer2) => {
-      console.log( rockPaperScissors(answer1, answer2) );
+      console.log(rockPaperScissors(answer1, answer2));
       getPrompt();
     });
   });
@@ -36,12 +71,20 @@ if (typeof describe === 'function') {
     it('should detect which hand won', () => {
       assert.equal(rockPaperScissors('rock', 'paper'), "Hand two wins!");
       assert.equal(rockPaperScissors('paper', 'scissors'), "Hand two wins!");
+      assert.equal(rockPaperScissors('scissors', 'rock'), "Hand two wins!");
       assert.equal(rockPaperScissors('rock', 'scissors'), "Hand one wins!");
+      assert.equal(rockPaperScissors('paper', 'rock'), "Hand one wins!");
+      assert.equal(rockPaperScissors('scissors', 'paper'), "Hand one wins!");
     });
     it('should scrub input to ensure lowercase with "trim"ed whitepace', () => {
       assert.equal(rockPaperScissors('rOcK', ' paper '), "Hand two wins!");
       assert.equal(rockPaperScissors('Paper', 'SCISSORS'), "Hand two wins!");
-      assert.equal(rockPaperScissors('rock ', 'sCiSsOrs'), "Hand one wins!");
+      assert.equal(rockPaperScissors('ScissoRS ', ' paper '), "Hand one wins!");
+    });
+    it('should check to see if inputs are valid', () => {
+      assert.equal(rockPaperScissors('leaf', 'river'), 'Invalid input! Please try again and type either rock, paper or scissors');
+      assert.equal(rockPaperScissors('rck', 'apaper'), 'Invalid input! Please try again and type either rock, paper or scissors');
+      assert.equal(rockPaperScissors('p', 's'), 'Invalid input! Please try again and type either rock, paper or scissors');
     });
   });
 } else {
