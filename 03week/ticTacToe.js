@@ -59,8 +59,8 @@ function diagonalWin() {
 
 // function checkForTie() {
 //   board.forEach(function(ind) {
-//     if (ind !== ''){
-//       console.log("It's a tie")
+//     if (ind !== [' ', ' ', ' ']){
+//       console.log("It's a tie!")
 //     };
 //   });
 // }
@@ -70,6 +70,7 @@ function checkForWin() {
   horizontalWin();
   verticalWin();
   diagonalWin();
+  // checkForTie();
 
 };
 
