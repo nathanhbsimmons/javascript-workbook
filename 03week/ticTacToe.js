@@ -32,12 +32,8 @@ function printBoard() {
 
 function horizontalWin() {
   //checks for the 3 cases of a horizontal win
-  if ((board[0][0] == 'X' && board[0][1] == 'X' && board[0][2] == 'X') ||
-    (board[1][0] == 'X' && board[1][1] == 'X' && board[1][2] == 'X') ||
-    (board[2][0] == 'X' && board[2][1] == 'X' && board[2][2] == 'X') ||
-    (board[0][0] == 'O' && board[0][1] == 'O' && board[0][2] == 'O') ||
-    (board[1][0] == 'O' && board[1][1] == 'O' && board[1][2] == 'O') ||
-    (board[0] == 'O' && board[1] == 'O' && board[2] == 'O')){
+  if ((board[0] == 'X', 'X', 'X') || (board[1] == 'X', 'X', 'X') || (board[2] == 'X', 'X', 'X') ||
+      (board[0] == 'O', 'O', 'O') || (board[1] == 'O', 'O', 'O') || (board[2] == 'O', 'O', 'O')){
     console.log(`${playerTurn} wins!`)
     return true
   }
@@ -46,9 +42,9 @@ function horizontalWin() {
 
 function verticalWin() {
   //checks for the 3 cases of a vert win
-  if ((rowZero[0] === 'X' && rowOne[0] === 'X' && rowTwo[0] === playerTurn) ||
-    (rowZero[1] === playerTurn && rowOne[1] === playerTurn && rowTwo[1] === playerTurn) ||
-    (rowZero[2] === playerTurn && rowOne[2] === playerTurn && rowTwo[2] === playerTurn)) {
+  if ((board[0][0] === 'X' && board[1][0] === 'X' && board[2][0] === playerTurn) ||
+    (board[0][1] === playerTurn && board[1][1] === playerTurn && board[2][1] === playerTurn) ||
+    (board[0][2] === playerTurn && board[1][2] === playerTurn && board[2][2] === playerTurn)) {
     console.log(`${playerTurn} wins!`)
     return true
   }
@@ -56,8 +52,8 @@ function verticalWin() {
 
 function diagonalWin() {
   //checks for last 2 cases of win, diagonally
-  if ((rowZero[0] === playerTurn && rowOne[1] === playerTurn && rowTwo[2] === playerTurn) ||
-    (rowZero[2] === playerTurn && rowOne[1] === playerTurn && rowTwo[0] === playerTurn)) {
+  if ((board[0][0] === playerTurn && board[1][1] === playerTurn && board[2][2] === playerTurn) ||
+    (board[0][2] === playerTurn && board[1][1] === playerTurn && board[2][0] === playerTurn)) {
     console.log(`${playerTurn} wins!`)
     return true
   }
