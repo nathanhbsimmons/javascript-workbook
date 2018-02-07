@@ -23,8 +23,16 @@ function movePiece(startStack, endStack) {
   stacks[endStack].push(stacks[startStack].pop())
 }
 
-function isLegal() {
-  // Your code here
+function isLegal(startStack, endStack) {
+  if (stacks[startStack].length == 0){
+    console.log("Can't start from an empty stack!")
+    return
+  } else if (stacks[startStack][stacks[startStack].length-1] > stacks[endStack][stacks[endStack].length-1]){
+    console.log("Can't move larger number on top of smaller number")
+    return
+  } else {
+    return movePiece(startStack, endStack);
+  }
 
 }
 
@@ -34,7 +42,7 @@ function checkForWin() {
 }
 
 function towersOfHanoi(startStack, endStack) {
-  movePiece(startStack, endStack)
+  isLegal(startStack, endStack);
 
 }
 
