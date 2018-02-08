@@ -14,7 +14,7 @@ let stacks = {
 };
 
 function printStacks() {
-  console.log("--------------");
+  console.log("--------------");//added lines before and after stacks to increase readability
   console.log("a: " + stacks.a);
   console.log("b: " + stacks.b);
   console.log("c: " + stacks.c);
@@ -22,34 +22,39 @@ function printStacks() {
 }
 
 function movePiece(startStack, endStack) {
-
+  //use pop() method to remove last item from startStack array and use push() method
+  //to add the popped number to endStack array
   stacks[endStack].push(stacks[startStack].pop())
-
+  //check for win after every move
   return checkForWin();
 }
 
 function isLegal(startStack, endStack) {
+  //prevent movePiece() from popping an empty string from startStack and pushing
+  //an empty string to endStack
   if (stacks[startStack].length == 0){
     console.log("Can't start from an empty stack!")
     return true
+  //prevent movePiece() from adding a greater number to a stack/array ending with a larger number
   } else if (stacks[startStack][stacks[startStack].length-1] > stacks[endStack][stacks[endStack].length-1]){
     console.log("Can't move larger number on top of smaller number")
     return true
+  //if move is legal then it will return the movePiece() function
   } else {
     return movePiece(startStack, endStack);
   }
 }
 
 function checkForWin() {
-  if (stacks.b.length === 4 || stacks.c.length === 4){
-    console.log("you're a winner")
-    printStacks();
-    return reset();
+  if (stacks.b.length === 4 || stacks.c.length === 4){//checks for the only 2 cases of winning
+    console.log("You're a winner!!")
+    printStacks();//show the winner their winning stack before resetting the game board
+    return reset();//if there is a win, the game will reset after showing the winner their game board
   }
 }
 
 function reset(){
-  stacks = {
+  stacks = {//sets the value of stack back to the original value
     a: [4, 3, 2, 1],
     b: [],
     c: []
@@ -57,7 +62,7 @@ function reset(){
 }
 
 function towersOfHanoi(startStack, endStack) {
-  isLegal(startStack, endStack);
+  isLegal(startStack, endStack);//triggers the isLegal() function to check for valid moves before moving pieces
 }
 
 function getPrompt() {
