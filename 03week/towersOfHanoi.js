@@ -22,6 +22,7 @@ function printStacks() {
 }
 
 function movePiece(startStack, endStack) {
+
   stacks[endStack].push(stacks[startStack].pop())
 
   return checkForWin();
@@ -37,7 +38,6 @@ function isLegal(startStack, endStack) {
   } else {
     return movePiece(startStack, endStack);
   }
-
 }
 
 function checkForWin() {
@@ -46,7 +46,6 @@ function checkForWin() {
     printStacks();
     return reset();
   }
-
 }
 
 function reset(){
@@ -59,7 +58,6 @@ function reset(){
 
 function towersOfHanoi(startStack, endStack) {
   isLegal(startStack, endStack);
-
 }
 
 function getPrompt() {
