@@ -14,9 +14,11 @@ let stacks = {
 };
 
 function printStacks() {
+  console.log("--------------");
   console.log("a: " + stacks.a);
   console.log("b: " + stacks.b);
   console.log("c: " + stacks.c);
+  console.log("--------------");
 }
 
 function movePiece(startStack, endStack) {
@@ -41,8 +43,18 @@ function isLegal(startStack, endStack) {
 function checkForWin() {
   if (stacks.b.length === 4 || stacks.c.length === 4){
     console.log("you're a winner")
+    printStacks();
+    return reset();
   }
 
+}
+
+function reset(){
+  stacks = {
+    a: [4, 3, 2, 1],
+    b: [],
+    c: []
+  }
 }
 
 function towersOfHanoi(startStack, endStack) {
