@@ -49,6 +49,7 @@ function checkForWin() {
   if (stacks.b.length === 4 || stacks.c.length === 4){//checks for the only 2 cases of winning
     console.log("You're a winner!!")
     printStacks();//show the winner their winning stack before resetting the game board
+    console.log("Start new game")
     return reset();//if there is a win, the game will reset after showing the winner their game board
   }
 }
