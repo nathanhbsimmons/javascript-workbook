@@ -13,6 +13,8 @@ let stacks = {
   c: []
 };
 
+const possibleInputs = ['a', 'b', 'c']
+
 function printStacks() {
   console.log("--------------");//added lines before and after stacks to increase readability
   console.log("a: " + stacks.a);
@@ -30,9 +32,13 @@ function movePiece(startStack, endStack) {
 }
 
 function isLegal(startStack, endStack) {
+  //check for valid stack letter input of a, b or c
+  if (possibleInputs.indexOf(startStack) === -1 || possibleInputs.indexOf(endStack) === -1){
+    console.log("Not a valid stack input.")
+    return true
   //prevent movePiece() from popping an empty string from startStack and pushing
   //an empty string to endStack
-  if (stacks[startStack].length == 0){
+  } else if (stacks[startStack].length === 0){
     console.log("Can't start from an empty stack!")
     return true
   //prevent movePiece() from adding a greater number to a stack/array ending with a larger number
