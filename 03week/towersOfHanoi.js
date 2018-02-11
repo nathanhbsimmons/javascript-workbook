@@ -15,7 +15,7 @@ let stacks = {
 
 const possibleInputs = ['a', 'b', 'c']
 
-function printStacks() {
+const printStacks=()=> {
   console.log("--------------");//added lines before and after stacks to increase readability
   console.log("a: " + stacks.a);
   console.log("b: " + stacks.b);
@@ -23,7 +23,7 @@ function printStacks() {
   console.log("--------------");
 }
 
-function movePiece(startStack, endStack) {
+const movePiece=(startStack, endStack)=> {
   //use pop() method to remove last item from startStack array and use push() method
   //to add the popped number to endStack array
   stacks[endStack].push(stacks[startStack].pop())
@@ -31,7 +31,7 @@ function movePiece(startStack, endStack) {
   return checkForWin();
 }
 
-function isLegal(startStack, endStack) {
+const isLegal=(startStack, endStack)=> {
   //check for valid stack letter input of a, b or c
   if (possibleInputs.indexOf(startStack) === -1 || possibleInputs.indexOf(endStack) === -1){
     console.log("Not a valid stack input.")
@@ -51,7 +51,7 @@ function isLegal(startStack, endStack) {
   }
 }
 
-function checkForWin() {
+const checkForWin=()=> {
   if (stacks.b.length === 4 || stacks.c.length === 4){//checks for the only 2 cases of winning
     console.log("You're a winner!!")
     printStacks();//show the winner their winning stack before resetting the game board
@@ -60,7 +60,7 @@ function checkForWin() {
   }
 }
 
-function reset(){
+const reset=()=> {
   stacks = {//sets the value of stack back to the original value
     a: [4, 3, 2, 1],
     b: [],
@@ -68,11 +68,11 @@ function reset(){
   }
 }
 
-function towersOfHanoi(startStack, endStack) {
+const towersOfHanoi=(startStack, endStack)=> {
   isLegal(startStack, endStack);//triggers the isLegal() function to check for valid moves before moving pieces
 }
 
-function getPrompt() {
+const getPrompt=()=> {
   printStacks();
   rl.question('start stack: ', (startStack) => {
     rl.question('end stack: ', (endStack) => {
