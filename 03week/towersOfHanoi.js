@@ -32,12 +32,13 @@ const movePiece=(startStack, endStack)=> {
 }
 
 const isLegal=(startStack, endStack)=> {
-  //check for valid stack letter input of a, b or c
+  //check for valid stack letter input of a, b or c. if input is not a,b,c
+  //it will have a -1 index due to not being in possibleInputs array
   if (possibleInputs.indexOf(startStack) === -1 || possibleInputs.indexOf(endStack) === -1){
     console.log("Not a valid stack input.")
     return true
   //prevent movePiece() from popping an empty string from startStack and pushing
-  //an empty string to endStack
+  //an empty string to endStack by checking array length
   } else if (stacks[startStack].length === 0){
     console.log("Can't start from an empty stack!")
     return true
@@ -111,7 +112,7 @@ if (typeof describe === 'function') {
       };
       assert.equal(checkForWin(), reset());
     });
-    it('should reset', () => {
+    it('should reset board and game', () => {
       stacks = {
         a: [4, 3, 2],
         b: [1],
