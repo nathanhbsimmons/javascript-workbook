@@ -23,12 +23,8 @@ const printStacks=()=> {
   console.log("--------------");
 }
 
-const movePiece=(startStack, endStack)=> {
-  //use pop() method to remove last item from startStack array and use push() method
-  //to add the popped number to endStack array
-  stacks[endStack].push(stacks[startStack].pop())
-  //check for win after every move
-  return checkForWin();
+const towersOfHanoi=(startStack, endStack)=> {
+  isLegal(startStack, endStack);//triggers the isLegal() function to check for valid moves and input before moving pieces
 }
 
 const isLegal=(startStack, endStack)=> {
@@ -52,6 +48,14 @@ const isLegal=(startStack, endStack)=> {
   }
 }
 
+const movePiece=(startStack, endStack)=> {
+  //use pop() method to remove last item from startStack array and use push() method
+  //to add the popped number to endStack array
+  stacks[endStack].push(stacks[startStack].pop())
+  //check for win after every move
+  return checkForWin();
+}
+
 const checkForWin=()=> {
   if (stacks.b.length === 4 || stacks.c.length === 4){//checks for the only 2 cases of winning
     console.log("You're a winner!!")
@@ -69,9 +73,6 @@ const reset=()=> {
   }
 }
 
-const towersOfHanoi=(startStack, endStack)=> {
-  isLegal(startStack, endStack);//triggers the isLegal() function to check for valid moves before moving pieces
-}
 
 const getPrompt=()=> {
   printStacks();
