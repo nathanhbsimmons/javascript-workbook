@@ -1,7 +1,7 @@
 'use strict';
 
 const carsInReverse = ['honda', 'toyota', 'bmw',' jeep', 'ford', 'tesla']
-const arrLength = carsInReverse.length
+
 // for loop
 // Use a for loop to console.log each item in the array carsInReverse.
 const consoleLogArr=()=> {
@@ -30,8 +30,6 @@ const consoleLogKey=()=> {
     console.log(key)
   }
 }
-
-consoleLogKey();
 
 // Then use a for...in loop and if state to console.log the value associated with the key birthDate.
 //
