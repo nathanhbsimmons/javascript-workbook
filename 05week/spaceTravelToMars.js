@@ -17,9 +17,9 @@ class CrewMember {
     this.specialSkill = specialSkill;
     this.ship = null;
   }
-  enterShip(ship) {
+  enterShip(ship) {//somehow this is pushing entire ship object instead of just ship name
     this.ship = ship
-    ship.emptyCrew.push(this.name)
+    ship.emptyCrew.push(this)
   }
 }
 
@@ -31,7 +31,11 @@ class Ship {
     this.emptyCrew = [];
   }
   missionStatement() {
-
+    if (jobTypes[this.emptyCrew[0]['job']] === this.type) {
+      console.log(this.ability)
+    } else {
+      console.log("Can't perform a mission yet.")
+    }
   }
 }
 // crewMember1.enterShip() = "Mav"
