@@ -2,7 +2,7 @@
 
 let assert = require('assert');
 
-const jobTypes = {
+let jobTypes = {
   pilot: 'MAV',
   mechanic: 'Repair Ship',
   commander: 'Main Ship',
@@ -19,22 +19,22 @@ class CrewMember {
   }
   enterShip(ship) {//somehow this is pushing entire ship object instead of just ship name
     this.ship = ship
-    ship.emptyCrew.push(this)
+    ship.crew.push(this)
   }
 }
 
 class Ship {
-  constructor(name, type, ability, emptyCrew){
+  constructor(name, type, ability, crew){
     this.name = name;
     this.type = type;
     this.ability = ability;
-    this.emptyCrew = [];
+    this.crew = [];
   }
   missionStatement() {
-    if (jobTypes[this.emptyCrew[0]['job']] === this.type) {
-      console.log(this.ability)
-    } else {
-      console.log("Can't perform a mission yet.")
+    if (this.crew.length == 0 || jobTypes[this.crew[0]['job']] !== this.type) {
+      return "Can't perform a mission yet."
+    }  else {
+      return this.ability
     }
   }
 }
