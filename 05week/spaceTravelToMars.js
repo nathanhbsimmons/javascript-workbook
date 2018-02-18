@@ -2,14 +2,14 @@
 
 let assert = require('assert');
 
-let jobTypes = {
+let jobTypes = {//holds the data referencing which job(key) goes with which ship(value)
   pilot: 'MAV',
   mechanic: 'Repair Ship',
   commander: 'Main Ship',
   programmer: 'Any Ship!'
 };
 
-// Your code here
+//create a CrewMember class that holds keys of name, job, specialSkill, ship(where ship = null)
 class CrewMember {
   constructor(name, job, specialSkill, ship){
     this.name = name;
@@ -17,12 +17,15 @@ class CrewMember {
     this.specialSkill = specialSkill;
     this.ship = null;
   }
-  enterShip(ship) {//somehow this is pushing entire ship object instead of just ship name
+  //method that pushes current CrewMember instance to current Ship instance
+  //crew array and current Ship instance to current CrewMemper ship property
+  enterShip(ship) {
     this.ship = ship
     ship.crew.push(this)
   }
 }
 
+//create a Ship class that holds keys of name, type, ability, crew(where crew = [])
 class Ship {
   constructor(name, type, ability, crew){
     this.name = name;
@@ -30,6 +33,9 @@ class Ship {
     this.ability = ability;
     this.crew = [];
   }
+  //method that returns ability of ship(mission statement) IF the correct
+  //CrewMember with corresponding job has been pushed to the Ship array else if
+  //the array is empty or job does not match ship return 'can't perform mission...'
   missionStatement() {
     if (this.crew.length == 0 || jobTypes[this.crew[0]['job']] !== this.type) {
       return "Can't perform a mission yet."
@@ -38,7 +44,7 @@ class Ship {
     }
   }
 }
-// crewMember1.enterShip() = "Mav"
+
 
 //tests
 if (typeof describe === 'function'){
