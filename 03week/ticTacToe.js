@@ -32,50 +32,43 @@ function printBoard() {
 
 function horizontalWin() {
   //checks for the 3 cases of a horizontal win for each player
-  if ((board[0][0] == 'X' && board[0][1] == 'X' && board[0][2] == 'X') ||
-    (board[1][0] == 'X' && board[1][1] == 'X' && board[1][2] == 'X') ||
-    (board[2][0] == 'X' && board[2][1] == 'X' && board[2][2] == 'X') ||
-    (board[0][0] == 'O' && board[0][1] == 'O' && board[0][2] == 'O') ||
-    (board[1][0] == 'O' && board[1][1] == 'O' && board[1][2] == 'O') ||
-    (board[2][0] == 'O' && board[2][1] == 'O' && board[2][2] == 'O')) {
+  if ((board[0][0] === playerTurn && board[0][1] === playerTurn && board[0][2] === playerTurn) ||
+    (board[1][0] === playerTurn && board[1][1] === playerTurn && board[1][2] === playerTurn) ||
+    (board[2][0] === playerTurn && board[2][1] === playerTurn && board[2][2] === playerTurn)) {
     console.log(`${playerTurn} wins!`)
     return true
-  } else {//if no win found then it exits to verticalWin func
-    return verticalWin();
   }
-
 };
 
 function verticalWin() {
   //checks for the 3 cases of a vert win for each player
-  if ((board[0][0] === 'X' && board[1][0] === 'X' && board[2][0] === 'X') ||
-    (board[0][1] === 'X' && board[1][1] === 'X' && board[2][1] === 'X') ||
-    (board[0][2] === 'X' && board[1][2] === 'X' && board[2][2] === 'X') ||
-    (board[0][0] === 'O' && board[1][0] === 'O' && board[2][0] === 'O') ||
-    (board[0][1] === 'O' && board[1][1] === 'O' && board[2][1] === 'O') ||
-    (board[0][2] === 'O' && board[1][2] === 'O' && board[2][2] === 'O') ) {
+  if ((board[0][0] === playerTurn && board[1][0] === playerTurn && board[2][0] === playerTurn) ||
+    (board[0][1] === playerTurn && board[1][1] === playerTurn && board[2][1] === playerTurn) ||
+    (board[0][2] === playerTurn && board[1][2] === playerTurn && board[2][2] === playerTurn) ) {
     console.log(`${playerTurn} wins!`)
     return true
-  } else {//if not win found then it exits to diagonlWin func
-    return diagonalWin();
   }
 };
 
 function diagonalWin() {
   //checks for last 2 cases of win, diagonally, for each player
-  if ((board[0][0] === 'X' && board[1][1] === 'X' && board[2][2] === 'X') ||
-    (board[0][2] === 'X' && board[1][1] === 'X' && board[2][0] === 'X') ||
-    (board[0][0] === 'O' && board[1][1] === 'O' && board[2][2] === 'O') ||
-    (board[0][2] === 'O' && board[1][1] === 'O' && board[2][0] === 'O')) {
+  if ((board[0][0] === playerTurn && board[1][1] === playerTurn && board[2][2] === playerTurn) ||
+    (board[0][2] === playerTurn && board[1][1] === playerTurn && board[2][0] === playerTurn)) {
     console.log(`${playerTurn} wins!`)
     return true
   }
 };
 
 
-function checkForWin(board) {
+function checkForWin() {
   //8 winning cases are checked with 3 seperate functions, starting with horizontal
-  return horizontalWin(board);
+  if (horizontalWin()) {
+    return true
+  } else if (diagonalWin()) {
+    return true
+  } else if (verticalWin()) {
+    return true
+  }
 };
 
 function switchPlayerTurn() {
@@ -91,8 +84,11 @@ function ticTacToe(row, column) {
   //reassigning value of board array and index with the playerTurn of 'X' or 'O'
   board[row][column] = playerTurn
 
-  checkForWin(board);
-  switchPlayerTurn();//switches player turn ONLY after board is set and win is checked for
+  if (checkForWin()){
+    return
+  } else {
+    switchPlayerTurn()
+  }
 };
 
 function getPrompt() {
