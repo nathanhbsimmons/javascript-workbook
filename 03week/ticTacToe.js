@@ -64,13 +64,8 @@ function diagonalWin() {
 
 function checkForWin() {
   //8 winning cases are checked with 3 seperate functions, starting with horizontal
-  if (horizontalWin()) {
-    return true
-  } else if (diagonalWin()) {
-    return true
-  } else if (verticalWin()) {
-    return true
-  }
+  return horizontalWin() || diagonalWin() || verticalWin()
+  
 };
 
 function switchPlayerTurn() {
