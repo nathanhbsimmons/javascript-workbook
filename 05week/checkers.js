@@ -7,8 +7,8 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-
 function Checker() {
+  // this.symbol
   // Your code here
 }
 
@@ -21,7 +21,7 @@ function Board() {
       this.grid[row] = [];
       // push in 8 columns of nulls
       for (let column = 0; column < 8; column++) {
-        this.grid[row].push(null);
+        this.grid[row].push(null);//REPLACE NULL WITH CHECKER PIECES INPUT
       }
     }
   };
