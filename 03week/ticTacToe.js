@@ -15,12 +15,6 @@ let board = [
 
 let playerTurn = 'X';
 
-//each row on the board is a seperate array. Each of these arrays are set to a
-//different variable to more easily mainpulate them
-// let rowZero = board[0]
-// let rowOne = board[1]
-// let rowTwo = board[2]
-
 function printBoard() {
   console.log('   0  1  2');
   console.log('0 ' + board[0].join(' | '));
@@ -30,13 +24,13 @@ function printBoard() {
   console.log('2 ' + board[2].join(' | '));
 };
 
+function isPlayerTurn(val) {
+  return val === playerTurn
+}
+
 function horizontalWin() {
   //checks for the 3 cases of a horizontal win for each player
-  // if (board[0].every(playerTurn) || board[1].every(playerTurn) || board[2].every(playerTurn))
-  if ((board[0][0] === playerTurn && board[0][1] === playerTurn && board[0][2] === playerTurn) ||
-    (board[1][0] === playerTurn && board[1][1] === playerTurn && board[1][2] === playerTurn) ||
-    (board[2][0] === playerTurn && board[2][1] === playerTurn && board[2][2] === playerTurn))
-  {
+  if (board[0].every(isPlayerTurn) || board[1].every(isPlayerTurn) || board[2].every(isPlayerTurn)){
     console.log(`${playerTurn} wins!`)
     return true
   }
@@ -61,11 +55,9 @@ function diagonalWin() {
   }
 };
 
-
 function checkForWin() {
   //8 winning cases are checked with 3 seperate functions, starting with horizontal
   return horizontalWin() || diagonalWin() || verticalWin()
-  
 };
 
 function switchPlayerTurn() {
