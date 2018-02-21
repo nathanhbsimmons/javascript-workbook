@@ -32,9 +32,11 @@ function printBoard() {
 
 function horizontalWin() {
   //checks for the 3 cases of a horizontal win for each player
+  // if (board[0].every(playerTurn) || board[1].every(playerTurn) || board[2].every(playerTurn))
   if ((board[0][0] === playerTurn && board[0][1] === playerTurn && board[0][2] === playerTurn) ||
     (board[1][0] === playerTurn && board[1][1] === playerTurn && board[1][2] === playerTurn) ||
-    (board[2][0] === playerTurn && board[2][1] === playerTurn && board[2][2] === playerTurn)) {
+    (board[2][0] === playerTurn && board[2][1] === playerTurn && board[2][2] === playerTurn))
+  {
     console.log(`${playerTurn} wins!`)
     return true
   }
