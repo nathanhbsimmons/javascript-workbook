@@ -7,27 +7,47 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-function Checker() {
-  // this.symbol
-  // Your code here
+let playerTurn = 'b'
+
+const switchPlayerTurn=()=>{
+  if (playerTurn = 'b'){
+    playerTurn = 'r'
+  } else {
+    playerTurn = 'b'
+  }
 }
 
-function Board() {
-  this.grid = [];
+class Checker {
+  constructor(symbol){
+    console.log('Checker')
+    this.symbol = symbol;
+    this.checkers = [];
+  }
+
+  // Your code here
+}
+const checkerB = new Checker ('b')
+const checkerR = new Checker ('r')
+
+class Board {
+  constructor () {
+    this.grid = [];
+  }
   // creates an 8x8 array, filled with null values
-  this.createGrid = function() {
+  createGrid() {
     // loop to create the 8 rows
     for (let row = 0; row < 8; row++) {
       this.grid[row] = [];
       // push in 8 columns of nulls
       for (let column = 0; column < 8; column++) {
+        console.log('createGrid')
         this.grid[row].push(null);//REPLACE NULL WITH CHECKER PIECES INPUT
       }
     }
   };
 
   // prints out the board
-  this.viewGrid = function() {
+  viewGrid() {
     // add our column numbers
     let string = "  0 1 2 3 4 5 6 7\n";
     for (let row = 0; row < 8; row++) {
@@ -38,7 +58,8 @@ function Board() {
         // if the location is "truthy" (contains a checker piece, in this case)
         if (this.grid[row][column]) {
           // push the symbol of the check in that location into the array
-          rowOfCheckers.push(this.grid[row][column].symbol);
+          console.log('viewGrid')
+          rowOfCheckers.push(this.grid[row][column].checkerB);
         } else {
           // just push in a blank space
           rowOfCheckers.push(' ');
@@ -54,11 +75,11 @@ function Board() {
 
   // Your code here
 }
-function Game() {
-
-  this.board = new Board();
-
-  this.start = function() {
+class Game {
+  constructor(board){
+    this.board = new Board();
+  }
+  start() {
     this.board.createGrid();
     // Your code here
   };
