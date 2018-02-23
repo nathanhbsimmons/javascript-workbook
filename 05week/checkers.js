@@ -7,9 +7,11 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-let playerTurn = 'b'
+let row//need a place to store row and column input
+let column
+let playerTurn = 'b'//need a place to store player turn
 
-const switchPlayerTurn=()=>{
+const switchPlayerTurn=()=>{//switches player turn with if/else
   if (playerTurn = 'b'){
     playerTurn = 'r'
   } else {
@@ -22,6 +24,10 @@ class Checker {
     console.log('Checker')
     this.symbol = symbol;
     this.checkers = [];
+  }
+  printToBoard(board){
+    this.board = board
+    board.grid.push(this.symbol)
   }
 
   // Your code here
@@ -59,7 +65,7 @@ class Board {
         if (this.grid[row][column]) {
           // push the symbol of the check in that location into the array
           console.log('viewGrid')
-          rowOfCheckers.push(this.grid[row][column].checkerB);
+          rowOfCheckers.push(this.grid[row][column].checkerB.symbol);
         } else {
           // just push in a blank space
           rowOfCheckers.push(' ');
@@ -82,8 +88,16 @@ class Game {
   start() {
     this.board.createGrid();
     // Your code here
-  };
+  }
+  moveChecker(whichPiece) {
+    board.grid[whichPiece[0]] //row of piece to move
+    board.grid[whichPiece[1]] //column  of piece to move
+    board.grid[toWhere[0]] //row to move piece to
+    board.grid[toWhere[1]] //column to move piece to
+  }
 }
+
+
 
 function getPrompt() {
   game.board.viewGrid();
