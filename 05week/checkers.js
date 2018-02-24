@@ -7,8 +7,8 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-let row//need a place to store row and column input
-let column
+// let row//need a place to store row and column input
+// let column
 let playerTurn = 'b'//need a place to store player turn
 
 const switchPlayerTurn=()=>{//switches player turn with if/else
@@ -21,15 +21,9 @@ const switchPlayerTurn=()=>{//switches player turn with if/else
 
 class Checker {
   constructor(symbol){
-    console.log('Checker')
     this.symbol = symbol;
     this.checkers = [];
   }
-  printToBoard(board){
-    this.board = board
-    board.grid.push(this.symbol)
-  }
-
   // Your code here
 }
 const checkerB = new Checker ('b')
@@ -46,7 +40,6 @@ class Board {
       this.grid[row] = [];
       // push in 8 columns of nulls
       for (let column = 0; column < 8; column++) {
-        console.log('createGrid')
         this.grid[row].push(null);//REPLACE NULL WITH CHECKER PIECES INPUT
       }
     }
@@ -64,8 +57,7 @@ class Board {
         // if the location is "truthy" (contains a checker piece, in this case)
         if (this.grid[row][column]) {
           // push the symbol of the check in that location into the array
-          console.log('viewGrid')
-          rowOfCheckers.push(this.grid[row][column].checkerB.symbol);
+          rowOfCheckers.push(this.grid[row][column].symbol);
         } else {
           // just push in a blank space
           rowOfCheckers.push(' ');
@@ -78,6 +70,36 @@ class Board {
     }
     console.log(string);
   };
+  setPieces(){
+    for (let row = 0; row < 8; row++){
+
+
+          for (let column = 0; column < 8; column++){
+
+            if(row%2 === 0 && column%2 === 1){
+              console.log('inside')
+              this.grid[row][column] === checkerB
+            } else if (row%2 === 1 && column%2 === 0){
+              this.grid[row][column] === checkerR
+            }
+          }
+
+
+    }
+console.log(this.grid)
+    // this.grid.forEach((row, col)=>{
+    //
+    //   if (row === 3 || row === 4) {
+    //     console.log('nuill')
+    //     this.grid[row][column] === null
+    //   } else if (row%2 === 0 && column%2 === 1){
+    //     this.grid[row][column] === checkerB
+    //   } else if (row%2 === 1 && column%2 === 0){
+    //     this.grid[row][column] === checkerR
+    //   }
+    // })
+
+  }
 
   // Your code here
 }
@@ -87,6 +109,7 @@ class Game {
   }
   start() {
     this.board.createGrid();
+    this.board.setPieces();
     // Your code here
   }
   moveChecker(whichPiece) {
