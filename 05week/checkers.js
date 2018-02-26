@@ -113,26 +113,66 @@ class Board {
 
   // Your code here
 }
+
+class LegalMove {
+  isLegalMove(whichPiece, toWhere){
+    if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack){
+      return this.board.grid[toWhere[0]][toWhere[1]] === null &&
+      toWhere[0] === (whichPiece[0] + 1) &&
+      toWhere[1] === ((whichPiece[1] + 1) || (whichPiece[1] - 1))
+    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed){
+      return this.board.grid[toWhere[0]][toWhere[1]] === null &&
+      toWhere[0] === (whichPiece[0] - 1) &&
+      toWhere[1] === ((whichPiece[1] + 1) || (whichPiece[1] - 1))
+    }
+  }
+}
+
+
+
 class Game {
   constructor(board){
     this.board = new Board();
+
   }
   start() {
     this.board.createGrid();
     this.board.setPieces();
     // Your code here
   }
+
   moveChecker(whichPiece, toWhere){
-    this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
-    this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
+    if (this.isLegalMove(whichPiece, toWhere)){
+      console.log('move me')
+      this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
+      this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
+
+    }
 
     //alternate way to move piece (is this more immutable??)
     // this.board.grid[toWhere[0]][toWhere[1]] = this.board.grid[whichPiece[0]][whichPiece[1]]
     // this.board.grid[whichPiece[0]][whichPiece[1]] = null
 
   }
+  isLegalMove(whichPiece, toWhere){
+
+    if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack){
+      console.log('im black')
+      console.log((Number(whichPiece[1]) - 1), 'row to move')
+      console.log(this.board.grid[toWhere[0]][toWhere[1]])
+      return this.board.grid[toWhere[0]][toWhere[1]] === null &&
+      toWhere[0] == (Number(whichPiece[0]) + 1) &&
+      (toWhere[1] == (Number(whichPiece[1]) + 1) || toWhere[1] == (Number(whichPiece[1]) - 1))
+    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed){
+      console.log((Number(whichPiece[1]) - 1), 'row to move')
+      return this.board.grid[toWhere[0]][toWhere[1]] === null &&
+      toWhere[0] == (Number(whichPiece[0]) - 1) &&
+      (toWhere[1] == (Number(whichPiece[1]) + 1) || toWhere[1] == (Number(whichPiece[1]) - 1))
+    }
+  }
 
 }
+
 
 
 
