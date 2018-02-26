@@ -22,16 +22,16 @@ const switchPlayerTurn=()=>{//switches player turn with if/else
 class Checker {
   constructor(symbol){
     this.symbol = symbol;
-    this.checkers = [];
   }
   // Your code here
 }
-const checkerB = new Checker ('b')
-const checkerR = new Checker ('r')
+const checkerBlack = new Checker ('b')
+const checkerRed = new Checker ('r')
 
 class Board {
   constructor () {
     this.grid = [];
+    this.checkers = [];
   }
   // creates an 8x8 array, filled with null values
   createGrid() {
@@ -71,34 +71,44 @@ class Board {
     console.log(string);
   };
   setPieces(){
-    for (let row = 0; row < 8; row++){
-
-
-          for (let column = 0; column < 8; column++){
-
-            if(row%2 === 0 && column%2 === 1){
-              console.log('inside')
-              this.grid[row][column] === checkerB
-            } else if (row%2 === 1 && column%2 === 0){
-              this.grid[row][column] === checkerR
-            }
-          }
-
-
-    }
-console.log(this.grid)
-    // this.grid.forEach((row, col)=>{
-    //
-    //   if (row === 3 || row === 4) {
-    //     console.log('nuill')
-    //     this.grid[row][column] === null
-    //   } else if (row%2 === 0 && column%2 === 1){
-    //     this.grid[row][column] === checkerB
-    //   } else if (row%2 === 1 && column%2 === 0){
-    //     this.grid[row][column] === checkerR
+    // this.grid.map((row, column)=> {
+    //   if(row<3 && row%2 === 0 && column%2 === 1){
+    //     console.log('inside')
+    //     this.grid[row][column] = checkerB
+    //   } else if(row<3 && row%2 === 1 && column%2 === 0){
+    //     console.log('inside')
+    //     this.grid[row][column] = checkerB
+    //   } else if (row>4 && row%2 === 0 && column%2 === 1){
+    //     this.grid[row][column] = checkerR
+    //   } else if (row>4 && row%2 === 1 && column%2 === 0){
+    //     this.grid[row][column] = checkerR
     //   }
     // })
 
+    for (let row = 0; row < 8; row++){
+
+
+      for (let column = 0; column < 8; column++){
+
+        if(row<3 && row%2 === 0 && column%2 === 1){
+          this.grid[row][column] = checkerBlack
+          this.checkers.push(checkerBlack)
+        } else if(row<3 && row%2 === 1 && column%2 === 0){
+          this.grid[row][column] = checkerBlack
+          this.checkers.push(checkerBlack)
+        } else if (row>4 && row%2 === 0 && column%2 === 1){
+          this.grid[row][column] = checkerRed
+          this.checkers.push(checkerRed)
+        } else if (row>4 && row%2 === 1 && column%2 === 0){
+          this.grid[row][column] = checkerRed
+          this.checkers.push(checkerRed)
+        }
+
+      }
+
+
+    }
+    console.log(this.checkers.length)
   }
 
   // Your code here
@@ -112,13 +122,19 @@ class Game {
     this.board.setPieces();
     // Your code here
   }
-  moveChecker(whichPiece) {
-    board.grid[whichPiece[0]] //row of piece to move
-    board.grid[whichPiece[1]] //column  of piece to move
-    board.grid[toWhere[0]] //row to move piece to
-    board.grid[toWhere[1]] //column to move piece to
+  moveChecker(whichPiece, toWhere){
+    this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
+    this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
+
+    //alternate way to move piece (is this more immutable??)
+    // this.board.grid[toWhere[0]][toWhere[1]] = this.board.grid[whichPiece[0]][whichPiece[1]]
+    // this.board.grid[whichPiece[0]][whichPiece[1]] = null
+
   }
+
 }
+
+
 
 
 
