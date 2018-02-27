@@ -127,7 +127,7 @@ class Game {
   }
 
   moveChecker(whichPiece, toWhere) {
-    if (this.isLegalMove(whichPiece, toWhere)) {
+    if (this.isLegalMove(whichPiece, toWhere) || this.jumpAndKill(whichPiece, toWhere)) {
       //removes value at toWhere column/index of toWhere row/array and replaces it with piece that is moving
       this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
       //removes value at whichPiece column/index of whichPiece row/array and replaces it with null as placeholder
@@ -140,53 +140,59 @@ class Game {
 
   }
   isLegalMove(whichPiece, toWhere) {
-    if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack &&
-    this.board.grid[toWhere[0]][toWhere[1]] === null &&
-    toWhere[0] == (Number(whichPiece[0]) + 1) &&
-    (toWhere[1] == (Number(whichPiece[1]) + 1) || toWhere[1] == (Number(whichPiece[1]) - 1))) {
-      return true
-    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed &&
-    this.board.grid[toWhere[0]][toWhere[1]] === null &&
-    toWhere[0] == (Number(whichPiece[0]) - 1) &&
-    (toWhere[1] == (Number(whichPiece[1]) + 1) || toWhere[1] == (Number(whichPiece[1]) - 1))) {
-      return true
-    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack &&
-    this.board.grid[toWhere[0]][toWhere[1]] === null &&
-    toWhere[0] == (Number(whichPiece[0]) + 2) &&
-    (toWhere[1] == (Number(whichPiece[1]) + 2) || toWhere[1] == (Number(whichPiece[1]) - 2))){
-      return this.jumpAndKill(whichPiece, toWhere)
-    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed &&
-    this.board.grid[toWhere[0]][toWhere[1]] === null &&
-    toWhere[0] == (Number(whichPiece[0]) - 2) &&
-    (toWhere[1] == (Number(whichPiece[1]) + 2) || toWhere[1] == (Number(whichPiece[1]) - 2))) {
-      return this.jumpAndKill(whichPiece, toWhere)
+    //first check if piece is black
+    if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack){
+      //JUMP AND KILL MOVE - checks if space to move to is empty(null),
+      //two rows(arrays) away and diagonal (two columns(indexes) to the left or right)
+      if (this.board.grid[toWhere[0]][toWhere[1]] === null &&
+      toWhere[0] == (Number(whichPiece[0]) + 2) &&
+      (toWhere[1] == (Number(whichPiece[1]) + 2) || toWhere[1] == (Number(whichPiece[1]) - 2))) {
+        return this.jumpAndKill(whichPiece, toWhere)
+      } else {
+        //NORMAL MOVE - checks if space to move to is empty(null),
+        //one row(array) forward and diagonal (one column(index) to the left or to the right)
+        return this.board.grid[toWhere[0]][toWhere[1]] === null &&
+        toWhere[0] == (Number(whichPiece[0]) + 1) &&
+        (toWhere[1] == (Number(whichPiece[1]) + 1) || toWhere[1] == (Number(whichPiece[1]) - 1))
+      }
+    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed){
+      //JUMP AND KILL MOVE - checks if space to move to is empty(null),
+      //two rows(arrays) away and diagonal (two columns(indexes) to the left or right)
+      if (this.board.grid[toWhere[0]][toWhere[1]] === null &&
+      toWhere[0] == (Number(whichPiece[0]) - 2) &&
+      (toWhere[1] == (Number(whichPiece[1]) + 2) || toWhere[1] == (Number(whichPiece[1]) - 2))){
+        return this.jumpAndKill(whichPiece, toWhere)
+      } else {
+        //NORMAL MOVE - if piece being moved is red, checks if space to move to is empty(null),
+        //one row(array) forward and diagonal (one column to the left or to the right)
+        return this.board.grid[toWhere[0]][toWhere[1]] === null &&
+          toWhere[0] == (Number(whichPiece[0]) - 1) &&
+          (toWhere[1] == (Number(whichPiece[1]) + 1) || toWhere[1] == (Number(whichPiece[1]) - 1))
+      }
     }
   }
 
   jumpAndKill(whichPiece, toWhere) {
     if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack) {
       if (toWhere[1] == (Number(whichPiece[1]) + 2)){
-        this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
-        this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
-        this.board.grid[Number(whichPiece[0]) + 1].splice([Number(whichPiece[1]) + 1], 1, null)
-        this.board.checkers.pop()
+
+        return (this.board.grid[Number(whichPiece[0]) + 1].splice([Number(whichPiece[1]) + 1], 1, null) &&
+        this.board.checkers.pop())
+
       } else if (toWhere[1] == (Number(whichPiece[1]) - 2)){
-        this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
-        this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
-        this.board.grid[Number(whichPiece[0]) + 1].splice([Number(whichPiece[1]) - 1], 1, null)
-        this.board.checkers.pop()
+        return (this.board.grid[Number(whichPiece[0]) + 1].splice([Number(whichPiece[1]) - 1], 1, null) &&
+        this.board.checkers.pop())
       }
     } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed){
       if (toWhere[1] == (Number(whichPiece[1]) + 2)){
-        this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
-        this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
-        this.board.grid[Number(whichPiece[0]) - 1].splice([Number(whichPiece[1]) + 1], 1, null)
-        this.board.checkers.shift()
+        
+        return (this.board.grid[Number(whichPiece[0]) - 1].splice([Number(whichPiece[1]) + 1], 1, null) &&
+        this.board.checkers.shift())
+
       } else if (toWhere[1] == (Number(whichPiece[1]) - 2)){
-        this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
-        this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
-        this.board.grid[Number(whichPiece[0]) - 1].splice([Number(whichPiece[1]) - 1], 1, null)
-        this.board.checkers.shift()
+        return (this.board.grid[Number(whichPiece[0]) - 1].splice([Number(whichPiece[1]) - 1], 1, null) &&
+        this.board.checkers.shift())
+
       }
     }
 
