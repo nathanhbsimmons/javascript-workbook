@@ -2,17 +2,12 @@
 
 const assert = require('assert');
 const readline = require('readline');
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 
-// let row//need a place to store row and column input
-// let column
-let playerTurn = 'b'//need a place to store player turn
+let playerTurn = 'b' //need a place to store player turn
 
-const switchPlayerTurn=()=>{//switches player turn with if/else
-  if (playerTurn = 'b'){
+const switchPlayerTurn = () => { //switches player turn with if/else
+  if (playerTurn = 'b') {
     playerTurn = 'r'
   } else {
     playerTurn = 'b'
@@ -20,18 +15,19 @@ const switchPlayerTurn=()=>{//switches player turn with if/else
 }
 
 class Checker {
-  constructor(symbol){
+  constructor(symbol) {
+    //stores the string that will actually be printed to the board representing the checker object
     this.symbol = symbol;
   }
-  // Your code here
 }
-const checkerBlack = new Checker ('b')
-const checkerRed = new Checker ('r')
+
+const checkerBlack = new Checker('b')//new instance of Checker class as a black checker piece
+const checkerRed = new Checker('r')//new instance of Checker class as a red checker piece
 
 class Board {
-  constructor () {
+  constructor() {
     this.grid = [];
-    this.checkers = [];
+    this.checkers = [];//this will store the values of all checker pieces on the board
   }
   // creates an 8x8 array, filled with null values
   createGrid() {
@@ -40,7 +36,7 @@ class Board {
       this.grid[row] = [];
       // push in 8 columns of nulls
       for (let column = 0; column < 8; column++) {
-        this.grid[row].push(null);//REPLACE NULL WITH CHECKER PIECES INPUT
+        this.grid[row].push(null); //REPLACE NULL WITH CHECKER PIECES INPUT
       }
     }
   };
@@ -70,7 +66,7 @@ class Board {
     }
     console.log(string);
   };
-  setPieces(){
+  setPieces() {
     // this.grid.map((row, column)=> {
     //   if(row<3 && row%2 === 0 && column%2 === 1){
     //     console.log('inside')
@@ -85,53 +81,42 @@ class Board {
     //   }
     // })
 
-    for (let row = 0; row < 8; row++){
-
-
-      for (let column = 0; column < 8; column++){
-
-        if(row<3 && row%2 === 0 && column%2 === 1){
+    //loops through every index of grid array, each of which is itself an array
+    for (let row = 0; row < 8; row++) {
+      //loops through every index of each row array
+      for (let column = 0; column < 8; column++) {
+        //for every even numbered row array (from arrays 0 to 2), push in a
+        //black checker piece at every odd numbered index
+        if (row < 3 && row % 2 === 0 && column % 2 === 1) {
           this.grid[row][column] = checkerBlack
           this.checkers.push(checkerBlack)
-        } else if(row<3 && row%2 === 1 && column%2 === 0){
+        //for every odd numbered array (from arrays 0 to 2), push in a
+        //black checker piece at every even numbered index
+        } else if (row < 3 && row % 2 === 1 && column % 2 === 0) {
           this.grid[row][column] = checkerBlack
           this.checkers.push(checkerBlack)
-        } else if (row>4 && row%2 === 0 && column%2 === 1){
+        //for every even numbered row array (from arrays 5 to 7), push in a
+        //red checker piece at every odd numbered index
+        } else if (row > 4 && row % 2 === 0 && column % 2 === 1) {
           this.grid[row][column] = checkerRed
           this.checkers.push(checkerRed)
-        } else if (row>4 && row%2 === 1 && column%2 === 0){
+          //for every odd numbered array (from arrays 5 to 7), push in a
+          //red checker piece at every even numbered index
+        } else if (row > 4 && row % 2 === 1 && column % 2 === 0) {
           this.grid[row][column] = checkerRed
           this.checkers.push(checkerRed)
         }
-
       }
-
-
     }
-    console.log(this.checkers.length)
-  }
-
-  // Your code here
-}
-
-class LegalMove {
-  isLegalMove(whichPiece, toWhere){
-    if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack){
-      return this.board.grid[toWhere[0]][toWhere[1]] === null &&
-      toWhere[0] === (whichPiece[0] + 1) &&
-      toWhere[1] === ((whichPiece[1] + 1) || (whichPiece[1] - 1))
-    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed){
-      return this.board.grid[toWhere[0]][toWhere[1]] === null &&
-      toWhere[0] === (whichPiece[0] - 1) &&
-      toWhere[1] === ((whichPiece[1] + 1) || (whichPiece[1] - 1))
-    }
+    // console.log(this.checkers)
   }
 }
+
 
 
 
 class Game {
-  constructor(board){
+  constructor(board) {
     this.board = new Board();
 
   }
@@ -141,12 +126,12 @@ class Game {
     // Your code here
   }
 
-  moveChecker(whichPiece, toWhere){
-    if (this.isLegalMove(whichPiece, toWhere)){
-      console.log('move me')
+  moveChecker(whichPiece, toWhere) {
+    if (this.isLegalMove(whichPiece, toWhere)) {
+      //removes value at toWhere column/index of toWhere row/array and replaces it with piece that is moving
       this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
+      //removes value at whichPiece column/index of whichPiece row/array and replaces it with null as placeholder
       this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
-
     }
 
     //alternate way to move piece (is this more immutable??)
@@ -154,29 +139,59 @@ class Game {
     // this.board.grid[whichPiece[0]][whichPiece[1]] = null
 
   }
-  isLegalMove(whichPiece, toWhere){
-
-    if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack){
-      console.log('im black')
-      console.log((Number(whichPiece[1]) - 1), 'row to move')
-      console.log(this.board.grid[toWhere[0]][toWhere[1]])
-      return this.board.grid[toWhere[0]][toWhere[1]] === null &&
-      toWhere[0] == (Number(whichPiece[0]) + 1) &&
-      (toWhere[1] == (Number(whichPiece[1]) + 1) || toWhere[1] == (Number(whichPiece[1]) - 1))
-    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed){
-      console.log((Number(whichPiece[1]) - 1), 'row to move')
-      return this.board.grid[toWhere[0]][toWhere[1]] === null &&
-      toWhere[0] == (Number(whichPiece[0]) - 1) &&
-      (toWhere[1] == (Number(whichPiece[1]) + 1) || toWhere[1] == (Number(whichPiece[1]) - 1))
+  isLegalMove(whichPiece, toWhere) {
+    if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack &&
+    this.board.grid[toWhere[0]][toWhere[1]] === null &&
+    toWhere[0] == (Number(whichPiece[0]) + 1) &&
+    (toWhere[1] == (Number(whichPiece[1]) + 1) || toWhere[1] == (Number(whichPiece[1]) - 1))) {
+      return true
+    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed &&
+    this.board.grid[toWhere[0]][toWhere[1]] === null &&
+    toWhere[0] == (Number(whichPiece[0]) - 1) &&
+    (toWhere[1] == (Number(whichPiece[1]) + 1) || toWhere[1] == (Number(whichPiece[1]) - 1))) {
+      return true
+    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack &&
+    this.board.grid[toWhere[0]][toWhere[1]] === null &&
+    toWhere[0] == (Number(whichPiece[0]) + 2) &&
+    (toWhere[1] == (Number(whichPiece[1]) + 2) || toWhere[1] == (Number(whichPiece[1]) - 2))){
+      return this.jumpAndKill(whichPiece, toWhere)
+    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed &&
+    this.board.grid[toWhere[0]][toWhere[1]] === null &&
+    toWhere[0] == (Number(whichPiece[0]) - 2) &&
+    (toWhere[1] == (Number(whichPiece[1]) + 2) || toWhere[1] == (Number(whichPiece[1]) - 2))) {
+      return this.jumpAndKill(whichPiece, toWhere)
     }
   }
 
+  jumpAndKill(whichPiece, toWhere) {
+    if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack) {
+      if (toWhere[1] == (Number(whichPiece[1]) + 2)){
+        this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
+        this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
+        this.board.grid[Number(whichPiece[0]) + 1].splice([Number(whichPiece[1]) + 1], 1, null)
+        this.board.checkers.pop()
+      } else if (toWhere[1] == (Number(whichPiece[1]) - 2)){
+        this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
+        this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
+        this.board.grid[Number(whichPiece[0]) + 1].splice([Number(whichPiece[1]) - 1], 1, null)
+        this.board.checkers.pop()
+      }
+    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed){
+      if (toWhere[1] == (Number(whichPiece[1]) + 2)){
+        this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
+        this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
+        this.board.grid[Number(whichPiece[0]) - 1].splice([Number(whichPiece[1]) + 1], 1, null)
+        this.board.checkers.shift()
+      } else if (toWhere[1] == (Number(whichPiece[1]) - 2)){
+        this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
+        this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
+        this.board.grid[Number(whichPiece[0]) - 1].splice([Number(whichPiece[1]) - 1], 1, null)
+        this.board.checkers.shift()
+      }
+    }
+
+  }
 }
-
-
-
-
-
 
 function getPrompt() {
   game.board.viewGrid();
@@ -191,7 +206,6 @@ function getPrompt() {
 const game = new Game();
 game.start();
 
-
 // Tests
 
 if (typeof describe === 'function') {
@@ -204,8 +218,8 @@ if (typeof describe === 'function') {
     });
   });
 
-  describe('Game.moveChecker()', function () {
-    it('should move a checker', function () {
+  describe('Game.moveChecker()', function() {
+    it('should move a checker', function() {
       assert(!game.board.grid[4][1]);
       game.moveChecker('50', '41');
       assert(game.board.grid[4][1]);
