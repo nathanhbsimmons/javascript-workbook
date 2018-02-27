@@ -4,15 +4,19 @@ const assert = require('assert');
 const readline = require('readline');
 const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 
-let playerTurn = 'b' //need a place to store player turn
+//*** Do I need to switch player???? ***
+// let playerTurn = 'b' //need a place to store player turn
+//
+// const switchPlayerTurn = () => { //switches player turn with if/else
+//   if (playerTurn = 'b') {
+//     playerTurn = 'r'
+//   } else {
+//     playerTurn = 'b'
+//   }
+// }
 
-const switchPlayerTurn = () => { //switches player turn with if/else
-  if (playerTurn = 'b') {
-    playerTurn = 'r'
-  } else {
-    playerTurn = 'b'
-  }
-}
+//stores turn count
+let turns = 0
 
 class Checker {
   constructor(symbol) {
@@ -67,6 +71,7 @@ class Board {
     console.log(string);
   };
   setPieces() {
+    //*** will map() work here instead of nested for loops??? ****
     // this.grid.map((row, column)=> {
     //   if(row<3 && row%2 === 0 && column%2 === 1){
     //     console.log('inside')
@@ -108,7 +113,6 @@ class Board {
         }
       }
     }
-    // console.log(this.checkers)
   }
 }
 
@@ -123,22 +127,26 @@ class Game {
   start() {
     this.board.createGrid();
     this.board.setPieces();
-    // Your code here
   }
 
   moveChecker(whichPiece, toWhere) {
+    //if isLegalMove() function returns truthy or if jumpAndKill()function returns truthy,
+    //then run moveChecker() function
     if (this.isLegalMove(whichPiece, toWhere) || this.jumpAndKill(whichPiece, toWhere)) {
       //removes value at toWhere column/index of toWhere row/array and replaces it with piece that is moving
       this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
       //removes value at whichPiece column/index of whichPiece row/array and replaces it with null as placeholder
       this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
     }
+    //adds to turn count every move
+    turns ++
+    console.log(`there are ${40 - turns} remaining turns`)
 
     //alternate way to move piece (is this more immutable??)
     // this.board.grid[toWhere[0]][toWhere[1]] = this.board.grid[whichPiece[0]][whichPiece[1]]
     // this.board.grid[whichPiece[0]][whichPiece[1]] = null
-
   }
+
   isLegalMove(whichPiece, toWhere) {
     //first check if piece is black
     if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack){
@@ -174,28 +182,58 @@ class Game {
 
   jumpAndKill(whichPiece, toWhere) {
     if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack) {
-      if (toWhere[1] == (Number(whichPiece[1]) + 2)){
-
+      //checks if space to move to is 2 indexes to the right
+      if (toWhere[1] == (Number(whichPiece[1]) + 2) &&
+          //checks to make sure not jumping empty space
+          this.board.grid[Number(whichPiece[0]) + 1][Number(whichPiece[1]) + 1] !== null){
+        //returns mod of space of piece that is jumped
         return (this.board.grid[Number(whichPiece[0]) + 1].splice([Number(whichPiece[1]) + 1], 1, null) &&
-        this.board.checkers.pop())
-
-      } else if (toWhere[1] == (Number(whichPiece[1]) - 2)){
+        this.board.checkers.pop())//pops off one of the red checker objects off of checkers array
+      //checks if space to move is 2 indexes to left
+      } else if (toWhere[1] == (Number(whichPiece[1]) - 2) &&
+        //checks to make sure not jumping empty space
+        this.board.grid[Number(whichPiece[0]) + 1][Number(whichPiece[1]) - 1] !== null){
+        //returns mod of space of piece that is jumped
         return (this.board.grid[Number(whichPiece[0]) + 1].splice([Number(whichPiece[1]) - 1], 1, null) &&
-        this.board.checkers.pop())
+        this.board.checkers.pop())//pops off one of the red checker objects off of checkers array
       }
     } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed){
-      if (toWhere[1] == (Number(whichPiece[1]) + 2)){
-        
+      //checks if space to move to is 2 indexes to the right
+      if (toWhere[1] == (Number(whichPiece[1]) + 2) &&
+          //checks to make sure not jumping empty space
+          this.board.grid[Number(whichPiece[0]) - 1][Number(whichPiece[1]) + 1] !== null){
+        //returns mod of space of piece that is jumped
         return (this.board.grid[Number(whichPiece[0]) - 1].splice([Number(whichPiece[1]) + 1], 1, null) &&
-        this.board.checkers.shift())
-
-      } else if (toWhere[1] == (Number(whichPiece[1]) - 2)){
+        this.board.checkers.shift())//shifts off one of the black checker objects off of checkers array
+      //checks if space to move is 2 indexes to left
+      } else if (toWhere[1] == (Number(whichPiece[1]) - 2) &&
+        //checks to make sure not jumping empty space
+        this.board.grid[Number(whichPiece[0]) - 1][Number(whichPiece[1]) - 1] !== null){
+        //returns mod of space of piece that is jumped
         return (this.board.grid[Number(whichPiece[0]) - 1].splice([Number(whichPiece[1]) - 1], 1, null) &&
-        this.board.checkers.shift())
-
+        this.board.checkers.shift())//shifts off one of the black checker objects off of checkers array
       }
     }
 
+  }
+  isCheckerBlack(piece1){
+    return piece1 === checkerBlack
+  }
+  isCheckerRed(piece2){
+    return piece2 === checkerRed
+  }
+  checkForWin(){
+    if(turns === 40){
+      const blackCheckerPieces = this.board.checkers.filter(this.isCheckerBlack)
+      const redCheckerPieces = this.board.checkers.filter(this.isCheckerRed)
+      if (blackCheckerPieces.length > redCheckerPieces.length){
+        console.log('Black wins!!')
+        return 'Black wins!!'
+      } else {
+        console.log('Red wins!!')
+        return 'Red wins!!'
+      }
+    }
   }
 }
 
@@ -204,6 +242,7 @@ function getPrompt() {
   rl.question('which piece?: ', (whichPiece) => {
     rl.question('to where?: ', (toWhere) => {
       game.moveChecker(whichPiece, toWhere);
+      game.checkForWin();
       getPrompt();
     });
   });
