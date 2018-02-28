@@ -5,8 +5,9 @@ const readline = require('readline');
 const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 
 //*** Do I need to switch player???? ***
-// let playerTurn = 'b' //need a place to store player turn
-//
+ //need a place to store player turn
+
+
 // const switchPlayerTurn = () => { //switches player turn with if/else
 //   if (playerTurn = 'b') {
 //     playerTurn = 'r'
@@ -27,6 +28,15 @@ class Checker {
 
 const checkerBlack = new Checker('b')//new instance of Checker class as a black checker piece
 const checkerRed = new Checker('r')//new instance of Checker class as a red checker piece
+let playerTurn = checkerBlack//set initial player turn
+
+const switchPlayerTurn=()=>{ //switches player turn with if/else
+  if (playerTurn === checkerBlack) {
+    playerTurn = checkerRed
+  } else {
+    playerTurn = checkerBlack
+  }
+}
 
 class Board {
   constructor() {
@@ -40,7 +50,7 @@ class Board {
       this.grid[row] = [];
       // push in 8 columns of nulls
       for (let column = 0; column < 8; column++) {
-        this.grid[row].push(null); //REPLACE NULL WITH CHECKER PIECES INPUT
+        this.grid[row].push(null);
       }
     }
   };
@@ -69,6 +79,8 @@ class Board {
       string += "\n";
     }
     console.log(string);
+    console.log(`It is Player '${playerTurn.symbol}' turn`)//tell the user whos turn it is
+
   };
   setPieces() {
     //*** will map() work here instead of nested for loops??? ****
@@ -137,11 +149,14 @@ class Game {
       this.board.grid[toWhere[0]].splice([toWhere[1]], 1, this.board.grid[whichPiece[0]][whichPiece[1]])
       //removes value at whichPiece column/index of whichPiece row/array and replaces it with null as placeholder
       this.board.grid[whichPiece[0]].splice([whichPiece[1]], 1, null)
-    }
-    //adds to turn count every move
-    turns ++
-    console.log(`there are ${40 - turns} remaining turns`)
 
+      turns ++  //adds to turn count every move
+      console.log(`*There are ${40 - turns} remaining turns*`)
+      return switchPlayerTurn()
+    } else {
+      console.log('!!!Not a valid move!!!')
+      return 'Not a valid move'
+    }
     //alternate way to move piece (is this more immutable??)
     // this.board.grid[toWhere[0]][toWhere[1]] = this.board.grid[whichPiece[0]][whichPiece[1]]
     // this.board.grid[whichPiece[0]][whichPiece[1]] = null
@@ -149,7 +164,7 @@ class Game {
 
   isLegalMove(whichPiece, toWhere) {
     //first check if piece is black
-    if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack){
+    if (this.board.grid[whichPiece[0]][whichPiece[1]]=== checkerBlack){
       //JUMP AND KILL MOVE - checks if space to move to is empty(null),
       //two rows(arrays) away and diagonal (two columns(indexes) to the left or right)
       if (this.board.grid[toWhere[0]][toWhere[1]] === null &&
@@ -235,6 +250,7 @@ class Game {
       }
     }
   }
+
 }
 
 function getPrompt() {
