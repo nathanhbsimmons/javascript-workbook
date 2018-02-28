@@ -24,10 +24,12 @@ const printStacks=()=> {
 }
 
 const towersOfHanoi=(startStack, endStack)=> {
-  isLegal(startStack, endStack);//triggers the isLegal() function to check for valid moves and input before moving pieces
+  isMoveIllegal(startStack, endStack);//triggers the isMoveIllegal() function to check for valid moves and input before moving pieces
+  checkForWin();//check for win after every move
+  resetGame();//if there is a win, the game will reset after showing the winner their game board
 }
 
-const isLegal=(startStack, endStack)=> {
+const isMoveIllegal=(startStack, endStack)=> {
   //check for valid stack letter input of a, b or c. if input is not a,b,c
   //it will have a -1 index due to not being in possibleInputs array
   if (possibleInputs.indexOf(startStack) === -1 || possibleInputs.indexOf(endStack) === -1){
@@ -51,25 +53,28 @@ const isLegal=(startStack, endStack)=> {
 const movePiece=(startStack, endStack)=> {
   //use pop() method to remove last item from startStack array and use push() method
   //to add the popped number to endStack array
-  stacks[endStack].push(stacks[startStack].pop())
-  //check for win after every move
-  return checkForWin();
+  return stacks[endStack].push(stacks[startStack].pop())
 }
 
 const checkForWin=()=> {
   if (stacks.b.length === 4 || stacks.c.length === 4){//checks for the only 2 cases of winning
     console.log("You're a winner!!")
-    printStacks();//show the winner their winning stack before resetting the game board
-    console.log("Start new game")
-    return reset();//if there is a win, the game will reset after showing the winner their game board
   }
 }
 
-const reset=()=> {
+const resetBoard=()=>{
   stacks = {//sets the value of stack back to the original value
     a: [4, 3, 2, 1],
     b: [],
     c: []
+  }
+}
+
+const resetGame=()=> {
+  if(checkForWin()){
+    printStacks();//show the winner their winning stack before resetting the game board
+    console.log("Start new game")
+    resetBoard();
   }
 }
 
@@ -103,7 +108,7 @@ if (typeof describe === 'function') {
         b: [1],
         c: []
       };
-      assert.equal(isLegal('a', 'b'), true);
+      assert.equal(isMoveIllegal('a', 'b'), true);
     });
     it('should detect a win', () => {
       stacks = {
@@ -111,7 +116,7 @@ if (typeof describe === 'function') {
         b: [4, 3, 2,1],
         c: []
       };
-      assert.equal(checkForWin(), reset());
+      assert.equal(checkForWin(), resetGame());
     });
     it('should reset board and game', () => {
       stacks = {
@@ -119,7 +124,7 @@ if (typeof describe === 'function') {
         b: [1],
         c: []
       };
-      reset();
+      resetBoard();
       assert.deepEqual(stacks, {
         a: [4, 3, 2,1],
         b: [],
