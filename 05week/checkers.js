@@ -4,18 +4,6 @@ const assert = require('assert');
 const readline = require('readline');
 const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 
-//*** Do I need to switch player???? ***
- //need a place to store player turn
-
-
-// const switchPlayerTurn = () => { //switches player turn with if/else
-//   if (playerTurn = 'b') {
-//     playerTurn = 'r'
-//   } else {
-//     playerTurn = 'b'
-//   }
-// }
-
 //stores turn count
 let turns = 0
 
@@ -28,13 +16,13 @@ class Checker {
 
 const checkerBlack = new Checker('b')//new instance of Checker class as a black checker piece
 const checkerRed = new Checker('r')//new instance of Checker class as a red checker piece
-let playerTurn = checkerBlack//set initial player turn
+let playerTurn = checkerRed//set initial player turn
 
 const switchPlayerTurn=()=>{ //switches player turn with if/else
-  if (playerTurn === checkerBlack) {
-    playerTurn = checkerRed
-  } else {
+  if (playerTurn === checkerRed) {
     playerTurn = checkerBlack
+  } else {
+    playerTurn = checkerRed
   }
 }
 
@@ -152,7 +140,7 @@ class Game {
 
       turns ++  //adds to turn count every move
       console.log(`*There are ${40 - turns} remaining turns*`)
-      return switchPlayerTurn()
+      return switchPlayerTurn();
     } else {
       console.log('!!!Not a valid move!!!')
       return 'Not a valid move'
@@ -164,7 +152,7 @@ class Game {
 
   isLegalMove(whichPiece, toWhere) {
     //first check if piece is black
-    if (this.board.grid[whichPiece[0]][whichPiece[1]]=== checkerBlack){
+    if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack && playerTurn == checkerBlack){
       //JUMP AND KILL MOVE - checks if space to move to is empty(null),
       //two rows(arrays) away and diagonal (two columns(indexes) to the left or right)
       if (this.board.grid[toWhere[0]][toWhere[1]] === null &&
@@ -178,7 +166,7 @@ class Game {
         toWhere[0] == (Number(whichPiece[0]) + 1) &&
         (toWhere[1] == (Number(whichPiece[1]) + 1) || toWhere[1] == (Number(whichPiece[1]) - 1))
       }
-    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed){
+    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed && playerTurn == checkerRed){
       //JUMP AND KILL MOVE - checks if space to move to is empty(null),
       //two rows(arrays) away and diagonal (two columns(indexes) to the left or right)
       if (this.board.grid[toWhere[0]][toWhere[1]] === null &&
@@ -250,7 +238,6 @@ class Game {
       }
     }
   }
-
 }
 
 function getPrompt() {
