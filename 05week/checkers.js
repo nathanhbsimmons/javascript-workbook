@@ -152,7 +152,7 @@ class Game {
 
   isLegalMove(whichPiece, toWhere) {
     //first check if piece is black
-    if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack && playerTurn == checkerBlack){
+    if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerBlack && playerTurn === checkerBlack){
       //JUMP AND KILL MOVE - checks if space to move to is empty(null),
       //two rows(arrays) away and diagonal (two columns(indexes) to the left or right)
       if (this.board.grid[toWhere[0]][toWhere[1]] === null &&
@@ -166,7 +166,7 @@ class Game {
         toWhere[0] == (Number(whichPiece[0]) + 1) &&
         (toWhere[1] == (Number(whichPiece[1]) + 1) || toWhere[1] == (Number(whichPiece[1]) - 1))
       }
-    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed && playerTurn == checkerRed){
+    } else if (this.board.grid[whichPiece[0]][whichPiece[1]] === checkerRed && playerTurn === checkerRed){
       //JUMP AND KILL MOVE - checks if space to move to is empty(null),
       //two rows(arrays) away and diagonal (two columns(indexes) to the left or right)
       if (this.board.grid[toWhere[0]][toWhere[1]] === null &&
