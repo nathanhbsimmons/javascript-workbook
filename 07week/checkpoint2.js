@@ -58,7 +58,6 @@ const strNums = ["1","4","1","5","9","2","6","5","3","5","8","9","7","9","3","2"
 const num = strNums.map((nums) => {
   return Number(nums)
 })
-console.log(num);
 
 // Find the sum of the even values
 const sumEvens = strNums.reduce((acc, num) => {
@@ -69,6 +68,7 @@ const sumEvens = strNums.reduce((acc, num) => {
 }, 0);
 
 console.log(sumEvens);
+
 // Return an object with counts for each number
 // {
 //   0: 0, <== increment these counts
@@ -84,7 +84,7 @@ const numCount = strNums.reduce((acc, num, i) => {
   return acc;
 }, {});
 
-console.log(numCount);
+console.log(numCount)
 
 // Find the index of the first "Austin" value (the value plus its index equals 512)
 const atxIdx = strNums.findIndex((num, i) => {
