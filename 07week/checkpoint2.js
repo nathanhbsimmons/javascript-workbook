@@ -70,6 +70,7 @@ const sumEvens = strNums.reduce((acc, num) => {
 }, 0);
 
 console.log(sumEvens);
+
 // Return an object with counts for each number
 // {
 //   0: 0, <== increment these counts
