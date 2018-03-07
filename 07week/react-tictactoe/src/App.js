@@ -6,7 +6,7 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      board: [[null, 'x', null], [null, null, null], [null, null, null]],
+      board: [[null, 'x', null], ['x', null, null], [null, null, null]],
       row: null,
     }
 
@@ -15,7 +15,7 @@ class App extends Component {
   }
 
 
-  switchPlayerTurn=()=>{ //switches player turn with if/else
+  switchPlayerTurn=()=>{
 
     if (this.playerTurn === 'x') {
       this.playerTurn = 'o'
@@ -24,34 +24,19 @@ class App extends Component {
     }
   }
 
-  insertPieces=()=>{
-    const rowStyle = {
-      backgroundColor: 'pink',
-      color: 'red',
-      height: '120px',
-      fontSize: '40px',
-      margin: '5px auto',
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center'
-    }
 
-
-
-  }
   handleClick=(i)=>{
     console.log(this.state.board)
 
     this.switchPlayerTurn()
   }
-  renderSquare(i) {
-    return <Square />;
-  }
+  // renderSquare(i) {
+  //   return <Square />;
+  // }
 
 
   render() {
     const rowStyle = {
-      backgroundColor: 'pink',
       color: 'red',
       height: '120px',
       fontSize: '40px',
@@ -65,15 +50,20 @@ class App extends Component {
       width: '110px',
       backgroundColor: 'pink',
       margin: 'auto 20px',
-      border: '1px solid black'
+      border: '1px solid black',
+      color: 'black',
+      fontSize: '60px'
       }
     return (
       <div >
-        {this.state.board.map((arr, i)=>{
-
-          return arr.map((piece, i)=>{
-            return (<div key={i} index={i} style={boxStyle} onClick={this.handleClick}>{piece}</div>);
-          })
+        {this.state.board.map((arr, index)=>{
+          const rowNum = index;
+        return   <div key={index} style={rowStyle} >
+          {arr.map((piece, i)=>{
+            console.log(i)
+            return (<button row={rowNum} key={i} index={i} style={boxStyle} onClick={()=> {this.handleClick()}}>{this.state.board[this.props.row][this.props.index]}x</button>);
+          })}
+          </div>
         })}
         {/* <div style={rowStyle}>
           <div key='0' style={boxStyle} onClick={this.handleClick} >{this.state.board[0][0]}</div>
@@ -98,24 +88,24 @@ class App extends Component {
 
 }
 
-class Square extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      board: [[null, 'x', null], [null, null, null], [null, null, null]],
-      row: null,
-    }
-
-    const playerturn = 'x'
-
-  }
-  render() {
-    return (
-      <div className="square">
-        {}
-      </div>
-    );
-  }
-}
+// class Square extends React.Component {
+//   constructor (props) {
+//     super(props)
+//     this.state = {
+//       board: [[null, 'x', null], [null, null, null], [null, null, null]],
+//       row: null,
+//     }
+//
+//     const playerturn = 'x'
+//
+//   }
+//   render() {
+//     return (
+//       <div className="square">
+//         {}
+//       </div>
+//     );
+//   }
+// }
 
 export default App;
