@@ -1,9 +1,7 @@
-
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Square from './Square.js'
 
-
-class Row extends Component{
+class Row extends Component {
   handleClick(squareNum, rowNum) {
     this.props.myClick(squareNum, rowNum)
   }
@@ -20,19 +18,14 @@ class Row extends Component{
       alignItems: 'center'
     }
 
-    return(
-
-      <div >
-        {this.props.board.map((arr, index)=>{
-          return   <div key={index} style={rowStyle}><Square arr={arr} rowNum = {index} board={this.props.board} stillMyClick={(rowNum, squareNum)=>this.props.myClick(rowNum, squareNum)}/></div>
+    return (<div >
+      {
+        this.props.board.map((arr, index) => {
+          return <div key={index} style={rowStyle}><Square arr={arr} rowNum={index} board={this.props.board} stillMyClick={(rowNum, squareNum) => this.props.myClick(rowNum, squareNum)}/></div>
         })
-        }
-
-      </div>
-    )
+      }
+    </div>)
   }
 }
-
-
 
 export default Row;
