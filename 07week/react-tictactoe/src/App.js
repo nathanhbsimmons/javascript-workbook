@@ -1,111 +1,80 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Row from './Row.js';
+import Square from './Square.js'
 
 class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      board: [[null, 'x', null], ['x', null, null], [null, null, null]],
-      row: null,
-    }
+      board: [[null, null, null], [null, null, null], [null, null, null]],
+      playerTurn: 'x',
 
-    const playerturn = 'x'
-
-  }
-
-
-  switchPlayerTurn=()=>{
-
-    if (this.playerTurn === 'x') {
-      this.playerTurn = 'o'
-    } else {
-      this.playerTurn = 'x'
     }
   }
 
-
-  handleClick=(i)=>{
-    console.log(this.state.board)
-
-    this.switchPlayerTurn()
-  }
-  // renderSquare(i) {
-  //   return <Square />;
-  // }
-
-
-  render() {
-    const rowStyle = {
-      color: 'red',
-      height: '120px',
-      fontSize: '40px',
-      margin: '5px auto',
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center'
-    }
-    const boxStyle = {
-      height: '110px',
-      width: '110px',
-      backgroundColor: 'pink',
-      margin: 'auto 20px',
-      border: '1px solid black',
-      color: 'black',
-      fontSize: '60px'
-      }
-    return (
-      <div >
-        {this.state.board.map((arr, index)=>{
-          const rowNum = index;
-        return   <div key={index} style={rowStyle} >
-          {arr.map((piece, i)=>{
-            console.log(i)
-            return (<button row={rowNum} key={i} index={i} style={boxStyle} onClick={()=> {this.handleClick()}}>{this.state.board[this.props.row][this.props.index]}x</button>);
-          })}
-          </div>
-        })}
-        {/* <div style={rowStyle}>
-          <div key='0' style={boxStyle} onClick={this.handleClick} >{this.state.board[0][0]}</div>
-          <div key='1' style={boxStyle}>{this.state.board[0][1]}</div>
-          <div key='2' style={boxStyle}>{this.state.board[0][2]}</div>
-        </div>
-        <div style={rowStyle}>
-          <div key='3' style={boxStyle}>{this.state.board[1][0]}</div>
-          <div key='4' style={boxStyle}>{this.state.board[1][1]}</div>
-          <div key='5' style={boxStyle}>{this.state.board[1][2]}</div>
-        </div>
-        <div style={rowStyle}>
-          <div key='6' style={boxStyle}>{this.state.board[2][0]}</div>
-          <div key='7' style={boxStyle}>{this.state.board[2][1]}</div>
-          <div key='8' style={boxStyle}>{this.state.board[2][2]}</div>
-        </div>
-        {this.insertPieces()}
-        <div style={this.props.boxStyle}>{this.insertPieces()}</div> */}
-      </div>)
-
-  }
-
+  isPlayerTurn=(val)=> {
+  return val === this.state.playerTurn
 }
 
-// class Square extends React.Component {
-//   constructor (props) {
-//     super(props)
-//     this.state = {
-//       board: [[null, 'x', null], [null, null, null], [null, null, null]],
-//       row: null,
-//     }
-//
-//     const playerturn = 'x'
-//
-//   }
-//   render() {
-//     return (
-//       <div className="square">
-//         {}
-//       </div>
-//     );
-//   }
-// }
+
+  horizontalWin=()=> {
+  //checks for the 3 cases of a horizontal win for each player
+    return this.state.board[0].every(this.isPlayerTurn) || this.state.board[1].every(this.isPlayerTurn) || this.state.board[2].every(this.isPlayerTurn)
+  }
+
+
+  verticalWin=()=> {
+  //checks for the 3 cases of a vert win for each player
+    return (this.state.board[0][0] === this.state.playerTurn && this.state.board[1][0] === this.state.playerTurn && this.state.board[2][0] === this.state.playerTurn) ||
+      (this.state.board[0][1] === this.state.playerTurn && this.state.board[1][1] === this.state.playerTurn && this.state.board[2][1] === this.state.playerTurn) ||
+      (this.state.board[0][2] === this.state.playerTurn && this.state.board[1][2] === this.state.playerTurn && this.state.board[2][2] === this.state.playerTurn)
+  }
+
+  diagonalWin=()=> {
+  //checks for last 2 cases of win, diagonally, for each player
+    return (this.state.board[0][0] === this.state.playerTurn && this.state.board[1][1] === this.state.playerTurn && this.state.board[2][2] === this.state.playerTurn) ||
+      (this.state.board[0][2] === this.state.playerTurn && this.state.board[1][1] === this.state.playerTurn && this.state.board[2][0] === this.state.playerTurn)
+  }
+
+  checkForWin=()=> {
+  //8 winning cases are checked with 3 seperate functions, starting with horizontal
+  if(this.horizontalWin() || this.diagonalWin() || this.verticalWin()){
+    console.log('win')
+  }
+
+};
+
+  switchPlayerTurn=()=>{
+    if (this.state.playerTurn === 'x') {
+      this.state.playerTurn = 'o'
+    } else {
+      this.state.playerTurn = 'x'
+    }
+  }
+
+  handleClick=(rowNum, squareNum)=>{
+    const newBoard = this.state.board
+    newBoard[rowNum][squareNum] = this.state.playerTurn
+    this.setState({board: newBoard})
+
+    this.checkForWin()
+    this.switchPlayerTurn()
+
+
+
+  }
+
+  render() {
+    return (
+      <div >
+        <Row
+          board={ this.state.board } myClick={(rowNum, squareNum)=> this.handleClick(rowNum, squareNum)}
+        />
+      </div>
+    )
+  }
+}
 
 export default App;
