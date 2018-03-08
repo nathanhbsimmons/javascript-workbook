@@ -1,8 +1,8 @@
 'use strict';
 
-let assert = require('assert');
+const assert = require('assert');
 
-let jobTypes = { //holds the data referencing which job(key) goes with which ship(value)
+const jobTypes = { //holds the data referencing which job(key) goes with which ship(value)
   pilot: 'MAV',
   mechanic: 'Repair Ship',
   commander: 'Main Ship',
