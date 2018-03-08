@@ -9,11 +9,13 @@ class Square extends Component{
       height: '110px',
       width: '110px',
       backgroundColor: 'pink',
-      margin: 'auto 20px',
+      margin: '20px',
       border: '1px solid black',
       color: 'black',
-      fontSize: '60px'
-      }
+      fontSize: '60px',
+      textAlign: 'center',
+    
+    }
     return(
       <div>
         {this.props.arr.map((piece, index)=>{

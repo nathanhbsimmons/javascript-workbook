@@ -9,8 +9,8 @@ class App extends Component {
     super(props)
     this.state = {
       board: [[null, null, null], [null, null, null], [null, null, null]],
-      playerTurn: 'x',
-
+      playerTurn: 'X',
+      winAlert: ''
     }
   }
 
@@ -41,16 +41,18 @@ class App extends Component {
   checkForWin=()=> {
   //8 winning cases are checked with 3 seperate functions, starting with horizontal
   if(this.horizontalWin() || this.diagonalWin() || this.verticalWin()){
-    console.log('win')
+    this.setState({
+      winAlert: `${this.state.playerTurn} is the winner!!!`
+    })
   }
 
 };
 
   switchPlayerTurn=()=>{
-    if (this.state.playerTurn === 'x') {
-      this.state.playerTurn = 'o'
+    if (this.state.playerTurn === 'X') {
+      this.state.playerTurn = 'O'
     } else {
-      this.state.playerTurn = 'x'
+      this.state.playerTurn = 'X'
     }
   }
 
@@ -62,16 +64,25 @@ class App extends Component {
     this.checkForWin()
     this.switchPlayerTurn()
 
-
-
   }
 
   render() {
+    const alertStyle = {
+      textAlign: 'center',
+      fontSize: '40px',
+      fontWeight: 'bold',
+      margin: '20px',
+    }
     return (
-      <div >
-        <Row
-          board={ this.state.board } myClick={(rowNum, squareNum)=> this.handleClick(rowNum, squareNum)}
-        />
+      <div>
+        <div >
+          <Row
+            board={ this.state.board } myClick={(rowNum, squareNum)=> this.handleClick(rowNum, squareNum)}
+          />
+        </div>
+        <div style={alertStyle}>
+          {this.state.winAlert}
+        </div>
       </div>
     )
   }

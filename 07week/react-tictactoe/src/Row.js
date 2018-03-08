@@ -13,10 +13,11 @@ class Row extends Component{
       color: 'red',
       height: '120px',
       fontSize: '40px',
-      margin: '5px auto',
+      margin: '5px',
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      alignItems: 'center'
     }
 
     return(
