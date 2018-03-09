@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
 import Row from './Row.js';
 import Square from './Square.js'
 
@@ -75,7 +75,11 @@ class App extends Component {
       fontWeight: 'bold',
       margin: '20px'
     }
-    return (<div>
+    return (
+
+
+      <div>
+      <h1 style={alertStyle}>Tic Tac Toe</h1>
       <div >
         <Row board={this.state.board} myClick={(rowNum, squareNum) => this.handleClick(rowNum, squareNum)}/>
       </div>

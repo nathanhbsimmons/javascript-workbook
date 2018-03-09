@@ -9,7 +9,7 @@ class Row extends Component {
   render() {
     const rowStyle = {
       color: 'red',
-      height: '120px',
+      height: '110px',
       fontSize: '40px',
       margin: '5px',
       display: 'flex',
