@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ListContainer from './ListContainer.js';
 
 class App extends Component {
   constructor(props){
     super(props)
       this.state = {
         inputValue: '',
+        list: [],
       }
 
+  }
+
+  handleClick=(e)=>{
+    const newList = [...this.state.list]
+
+    newList.push(this.state.inputValue)
+
+    this.setState({
+      list: newList,
+      inputValue: ''
+    })
   }
 
   handleInputChange=(e)=>{
@@ -21,7 +33,8 @@ class App extends Component {
     return (
       <div className="App">
         <input value={this.state.inputValue} onChange={this.handleInputChange}></input>
-        {this.state.inputValue}
+        <button onClick={this.handleClick}>Submit</button>
+        <ListContainer></ListContainer>
       </div>
     );
   }
