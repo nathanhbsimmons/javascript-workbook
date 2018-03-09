@@ -21,7 +21,8 @@ class Row extends Component {
     return (<div >
       {
         this.props.board.map((arr, index) => {
-          return <div key={index} style={rowStyle}><Square arr={arr} rowNum={index} board={this.props.board} stillMyClick={(rowNum, squareNum) => this.props.myClick(rowNum, squareNum)}/></div>
+          return <div style={rowStyle}><Square arr={arr} key={index} rowNum={index} board={this.props.board}
+            stillMyClick={(rowNum, squareNum) => this.props.myClick(rowNum, squareNum)}/></div>
         })
       }
     </div>)

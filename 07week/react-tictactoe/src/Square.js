@@ -21,7 +21,10 @@ class Square extends Component {
           const squareNum = index
           const pieceIndex = newBoard[rowNum][squareNum]
 
-          return <button key={index} square={index} style={boxStyle} onClick={() => this.props.stillMyClick(rowNum, squareNum)}>{pieceIndex}</button>
+          return <button style={boxStyle} key={index}
+            onClick={() => this.props.stillMyClick(rowNum, squareNum)}>
+            {pieceIndex}
+          </button>
         })
       }
     </div>)
