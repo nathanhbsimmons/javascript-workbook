@@ -28,6 +28,10 @@ class App extends Component {
     return val === this.state.playerTurn
   }
 
+  isFilled = (val) => {
+    return val !== null
+  }
+
   horizontalWin = () => {
     //checks for the 3 cases of a horizontal win for each player
     return this.state.board[0].every(this.isPlayerTurn) ||
@@ -62,6 +66,16 @@ class App extends Component {
     //8 winning cases are checked with 3 seperate functions, starting with horizontal
     if (this.horizontalWin() || this.diagonalWin() || this.verticalWin()) {
       this.setState({winAlert: `${this.state.playerTurn} is the winner!!!`})
+    } else {
+      this.checkForTie();
+    }
+  }
+
+  checkForTie = () => {
+    if (this.state.board[0].every(this.isFilled) &&
+    this.state.board[1].every(this.isFilled) &&
+    this.state.board[2].every(this.isFilled)) {
+      this.setState({winAlert: `It's a tie... :(`})
     }
   }
 
@@ -73,14 +87,19 @@ class App extends Component {
     }
   }
 
+  isValidClick = (rowNum, squareNum) => {
+    return this.state.board[rowNum][squareNum] === null
+  }
+
   handleClick = (rowNum, squareNum) => {
     //click handler function
-    const newBoard = [...this.state.board]//makes shallow copy of board arrays
-    newBoard[rowNum][squareNum] = this.state.playerTurn//sets the contents of whatever button is clicked to whichever players turn it is
-    this.setState({board: newBoard})//sets the board equal to the manipulated shallow copy
-    this.checkForWin()//runs through all win cases
-    this.switchPlayerTurn()//finally, switches playerTurn
-
+    if(this.isValidClick(rowNum, squareNum)){
+      const newBoard = [...this.state.board]//makes shallow copy of board arrays
+      newBoard[rowNum][squareNum] = this.state.playerTurn//sets the contents of whatever button is clicked to whichever players turn it is
+      this.setState({board: newBoard})//sets the board equal to the manipulated shallow copy
+      this.checkForWin()//runs through all win cases
+      this.switchPlayerTurn()//finally, switches playerTurn
+    }
   }
 
   render() {
