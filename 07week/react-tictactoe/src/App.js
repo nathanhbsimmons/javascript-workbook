@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 // import './App.css';
 import Row from './Row.js';
-import Square from './Square.js'
+// import Square from './Square.js'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      //3 arrays within an array, each holding 3 'null' place holder values to create board with
       board: [
         [
           null, null, null
@@ -19,11 +19,11 @@ class App extends Component {
           null, null, null
         ]
       ],
-      playerTurn: 'X',
+      playerTurn: 'X',//set initial playerTurn value to 'x'
       winAlert: ''
     }
   }
-
+  //this function is only needed for every() method
   isPlayerTurn = (val) => {
     return val === this.state.playerTurn
   }
@@ -65,43 +65,49 @@ class App extends Component {
     }
   }
 
-  switchPlayerTurn = () => {//*****REWRITE***** to not manipulate state directly(use this.setState)
+  switchPlayerTurn = () => {//switches player turn without directly mutating state
     if (this.state.playerTurn === 'X') {
-      this.state.playerTurn = 'O'
+      this.setState({playerTurn: 'O'})
     } else {
-      this.state.playerTurn = 'X'
+      this.setState({playerTurn: 'X'})
     }
   }
 
   handleClick = (rowNum, squareNum) => {
-    const newBoard = this.state.board
-    newBoard[rowNum][squareNum] = this.state.playerTurn
-    this.setState({board: newBoard})
-
-    this.checkForWin()
-    this.switchPlayerTurn()
+    //click handler function
+    const newBoard = [...this.state.board]//makes shallow copy of board arrays
+    newBoard[rowNum][squareNum] = this.state.playerTurn//sets the contents of whatever button is clicked to whichever players turn it is
+    this.setState({board: newBoard})//sets the board equal to the manipulated shallow copy
+    this.checkForWin()//runs through all win cases
+    this.switchPlayerTurn()//finally, switches playerTurn
 
   }
 
   render() {
-    const alertStyle = {
+    const style = {
       textAlign: 'center',
       fontSize: '40px',
       fontWeight: 'bold',
-      margin: '20px'
+      margin: '20px',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center'
     }
     return (
 
-
+      //divs render h1, alert for win and Row component (row component send down board props, and click handler props)
       <div>
-      <h1 style={alertStyle}>Tic Tac Toe</h1>
-      <div >
-        <Row board={this.state.board}
-          myClick={(rowNum, squareNum) => this.handleClick(rowNum, squareNum)}/>
-      </div>
-      <div style={alertStyle}>
-        {this.state.winAlert}
-      </div>
+        <h1 style={style}>Tic Tac Toe</h1>
+        <div style={style}>
+          <Row board={this.state.board}
+            squareClick={(rowNum, squareNum) => this.handleClick(rowNum, squareNum)}/>
+        </div>
+
+        <div style={style}>
+          {this.state.winAlert}
+        </div>
+
     </div>)
   }
 }

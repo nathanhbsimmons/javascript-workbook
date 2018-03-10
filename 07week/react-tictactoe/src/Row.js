@@ -8,21 +8,19 @@ class Row extends Component {
 
   render() {
     const rowStyle = {
-      color: 'red',
-      height: '110px',
-      fontSize: '40px',
+      height: '120px',
       margin: '5px',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center'
     }
-
-    return (<div >
+    //map function cycles through each outer array and renders a square component which thenm cycles through each inner array creating 3 rows of 3 buttons (passes down arr props, board props, click handle props)
+    return (<div>
       {
         this.props.board.map((arr, index) => {
-          return <div style={rowStyle}><Square arr={arr} key={index} rowNum={index} board={this.props.board}
-            stillMyClick={(rowNum, squareNum) => this.props.myClick(rowNum, squareNum)}/></div>
+          return <Square style={rowStyle} key={index} arr={arr} rowNum={index} board={this.props.board}
+            squareClick={(rowNum, squareNum) => this.props.squareClick(rowNum, squareNum)}/>
         })
       }
     </div>)
