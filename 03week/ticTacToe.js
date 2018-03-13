@@ -6,6 +6,7 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+
 let board = [
   [' ', ' ', ' '],
   [' ', ' ', ' '],
@@ -21,27 +22,66 @@ function printBoard() {
   console.log('1 ' + board[1].join(' | '));
   console.log('  ---------');
   console.log('2 ' + board[2].join(' | '));
+};
+
+function isPlayerTurn(val) {
+  return val === playerTurn
 }
 
 function horizontalWin() {
-  // Your code here
-}
+  //checks for the 3 cases of a horizontal win for each player
+  if (board[0].every(isPlayerTurn) || board[1].every(isPlayerTurn) || board[2].every(isPlayerTurn)){
+    console.log(`${playerTurn} wins!`)
+    return true
+  }
+};
 
 function verticalWin() {
-  // Your code here
-}
+  //checks for the 3 cases of a vert win for each player
+  if ((board[0][0] === playerTurn && board[1][0] === playerTurn && board[2][0] === playerTurn) ||
+    (board[0][1] === playerTurn && board[1][1] === playerTurn && board[2][1] === playerTurn) ||
+    (board[0][2] === playerTurn && board[1][2] === playerTurn && board[2][2] === playerTurn) ) {
+    console.log(`${playerTurn} wins!`)
+    return true
+  }
+};
 
 function diagonalWin() {
-  // Your code here
-}
+  //checks for last 2 cases of win, diagonally, for each player
+  if ((board[0][0] === playerTurn && board[1][1] === playerTurn && board[2][2] === playerTurn) ||
+    (board[0][2] === playerTurn && board[1][1] === playerTurn && board[2][0] === playerTurn)) {
+    console.log(`${playerTurn} wins!`)
+    return true
+  }
+};
 
 function checkForWin() {
-  // Your code here
+  //8 winning cases are checked with 3 seperate functions, starting with horizontal
+  return horizontalWin() || diagonalWin() || verticalWin()
+};
+
+function switchPlayerTurn() {
+//checks for which playerTurn it is and alternates back and forth each turn
+  if (playerTurn === 'X'){
+    playerTurn = 'O'
+  } else {
+    playerTurn = 'X'
+  }
+};
+
+function validMove(row, column) {
+  return board[row][column] === ' '
 }
 
 function ticTacToe(row, column) {
-  // Your code here
-}
+  //reassigning value of board array and index with the playerTurn of 'X' or 'O'
+  if (validMove(row, column)){
+    board[row][column] = playerTurn
+    if(!checkForWin()){
+      switchPlayerTurn()
+    }
+  }
+};
 
 function getPrompt() {
   printBoard();
@@ -80,7 +120,7 @@ if (typeof describe === 'function') {
     });
     it('should check for diagonal wins', () => {
       board = [ ['X', ' ', ' '], [' ', 'X', ' '], [' ', ' ', 'X'] ];
-      assert.equal(diagonalWin(), true);
+      assert.equal(diagonalWin(),  true);
     });
     it('should detect a win', () => {
       assert.equal(checkForWin(), true);
