@@ -69,14 +69,17 @@ function switchPlayerTurn() {
   }
 };
 
+function validMove(row, column) {
+  return board[row][column] === ' '
+}
+
 function ticTacToe(row, column) {
   //reassigning value of board array and index with the playerTurn of 'X' or 'O'
-  board[row][column] = playerTurn
-
-  if (checkForWin()){
-    return
-  } else {
-    switchPlayerTurn()
+  if (validMove(row, column)){
+    board[row][column] = playerTurn
+    if(!checkForWin()){
+      switchPlayerTurn()
+    }
   }
 };
 
