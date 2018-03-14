@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import MobileTearSheet from '../../../MobileTearSheet';
-import {List, ListItem} from './material-ui/List';
-import Subheader from './material-ui/Subheader';
-import Divider from './material-ui/Divider';
-import Checkbox from './material-ui/Checkbox';
-import Toggle from './material-ui/Toggle';
 
-import './App.css';
+import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
+import Checkbox from 'material-ui/Checkbox';
+import Toggle from 'material-ui/Toggle';
+
+
 
 class ListContainer extends Component {
 
@@ -22,7 +22,6 @@ class ListContainer extends Component {
     return (<div className="ListContainer">
 
       <div style={styles.root}>
-        <MobileTearSheet>
           <List>
             <Subheader>General</Subheader>
             <ListItem primaryText="Profile photo" secondaryText="Change your Google+ profile photo"/>
@@ -35,8 +34,7 @@ class ListContainer extends Component {
             <ListItem leftCheckbox={<Checkbox />} primaryText="Sounds" secondaryText="Hangouts message"/>
             <ListItem leftCheckbox={<Checkbox />} primaryText="Video sounds" secondaryText="Hangouts video call"/>
           </List>
-        </MobileTearSheet>
-        <MobileTearSheet>
+
           <List>
             <ListItem primaryText="When calls and notifications arrive" secondaryText="Always interrupt"/>
           </List>
@@ -54,7 +52,7 @@ class ListContainer extends Component {
             <ListItem primaryText="Sounds" leftCheckbox={<Checkbox />}/>
             <ListItem primaryText="Video sounds" leftCheckbox={<Checkbox />}/>
           </List>
-        </MobileTearSheet>
+
       </div>
 
     </div>);
