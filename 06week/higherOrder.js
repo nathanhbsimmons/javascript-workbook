@@ -9,7 +9,7 @@ const forEach=(arr, callback)=> {
 }
 
 const map=(arr, callback)=> {
-  let newArr = [];
+  const newArr = [];
   for(let i = 0; i < arr.length; i++){
     newArr.push(callback(arr[i]))
   }
@@ -17,7 +17,7 @@ const map=(arr, callback)=> {
 }
 
 const filter=(arr, callback)=> {
-  let newArr = [];
+  const newArr = [];
   for(let i = 0; i < arr.length; i++){
     if (callback(arr[i])){
       newArr.push(arr[i])
