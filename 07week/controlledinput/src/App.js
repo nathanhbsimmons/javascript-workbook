@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import './App.css';
 import ListContainer from './ListContainer.js';
 
@@ -31,11 +32,13 @@ class App extends Component {
 
   render() {
     return (
+      <MuiThemeProvider>
       <div className="App">
         <input value={this.state.inputValue} onChange={this.handleInputChange}></input>
         <button onClick={this.handleClick}>Submit</button>
         <ListContainer></ListContainer>
       </div>
+      </MuiThemeProvider>
     );
   }
 }
