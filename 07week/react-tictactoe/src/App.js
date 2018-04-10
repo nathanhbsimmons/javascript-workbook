@@ -23,6 +23,7 @@ class App extends Component {
       winAlert: ''
     }
   }
+  
   //this function is only needed for every() method
   isPlayerTurn = (val) => {
     return val === this.state.playerTurn
