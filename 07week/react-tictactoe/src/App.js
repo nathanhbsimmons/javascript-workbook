@@ -15,14 +15,14 @@ class App extends Component {
   }
 
 
-  switchPlayerTurn=()=>{
-
-    if (this.playerTurn === 'x') {
-      this.playerTurn = 'o'
-    } else {
-      this.playerTurn = 'x'
-    }
-  }
+  // switchPlayerTurn=()=>{
+  //
+  //   if (this.playerTurn === 'x') {
+  //     this.playerTurn = 'o'
+  //   } else {
+  //     this.playerTurn = 'x'
+  //   }
+  // }
 
 
   handleClick=(i)=>{
