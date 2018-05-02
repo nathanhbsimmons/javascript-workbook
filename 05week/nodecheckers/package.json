@@ -1,0 +1,11 @@
+{
+  "name": "nodecheckers",
+  "version": "1.0.1",
+  "description": "single file node app checkers game",
+  "main": "checkers.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "nhbs",
+  "license": "ISC"
+}

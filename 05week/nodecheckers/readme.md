@@ -1,0 +1,1 @@
+//Type node checkers.js to initiate game. Once initiated, select column and row of piece you wish to move and then the column and row of place on board you wish to move it to. Piece will only move if it is that players turn. Player with most pieces left after 40 turns wins.
