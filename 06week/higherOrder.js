@@ -2,22 +2,22 @@
 
 const assert = require('assert');
 
-function forEach(arr, callback) {
+const forEach=(arr, callback)=> {
   for(let i = 0; i < arr.length; i++){
     callback(arr[i])
   }
 }
 
-function map(arr, callback) {
-  let newArr = [];
+const map=(arr, callback)=> {
+  const newArr = [];
   for(let i = 0; i < arr.length; i++){
     newArr.push(callback(arr[i]))
   }
   return newArr
 }
 
-function filter(arr, callback) {
-  let newArr = [];
+const filter=(arr, callback)=> {
+  const newArr = [];
   for(let i = 0; i < arr.length; i++){
     if (callback(arr[i])){
       newArr.push(arr[i])
